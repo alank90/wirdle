@@ -13,6 +13,7 @@ _choco install gh_
 &nbsp;&nbsp;We also use the _npm-check-updates_ to update all packages to latest versions for each new project. To update all of our package dependencies in package.json (excluding our “vue” package), we would do the following:
 
 _ncu --upgrade_
+
 _npm install_
 
 &nbsp;&nbsp;Unfortunately as of this writing we also have to run _npm install vue@next_ seperately to insure latest version of vue is installed for the new project.
