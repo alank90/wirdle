@@ -1,6 +1,6 @@
 // Sample Router config. Need to add About and NotFound components.
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
+import Home from "@/components/Home.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
