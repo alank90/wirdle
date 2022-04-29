@@ -1,7 +1,7 @@
-export default function initBoard(Number_Of_Guesses) {
+export default function initBoard(Initial_Number_Of_Guesses) {
   let board = document.getElementById("game-board");
-
-  for (let i = 0; i < Number_Of_Guesses; i++) {
+  
+  for (let i = 0; i < Initial_Number_Of_Guesses; i++) {
     let row = document.createElement("div");
     row.className = "letter-row";
 
