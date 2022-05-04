@@ -1,4 +1,5 @@
 import { WORDS } from "@/components/modules/words.js";
+import shadeKeyBoard from "./shadeKeyboard";
 
 export default function checkGuess(
   guessesRemaining,
@@ -10,10 +11,12 @@ export default function checkGuess(
   let guessString = "";
   let rightGuess = Array.from(rightGuessString);
 
+  // Convert to a string from an array
   for (const val of currentGuess) {
     guessString += val;
   }
 
+  // Several basic validity checks on the guessString
   if (guessString.length != 5) {
     alert("Not enough letters!.");
   }
@@ -27,16 +30,17 @@ export default function checkGuess(
     let box = row.children[i];
     let letter = currentGuess[i];
 
-    let letterPosition = rightGuess.indexOf(currentGuess[i]);
-
     // Check if the letter is in the correct guess
+    let letterPosition = rightGuess.indexOf(letter);
+
+    // Now determine what color to assign to background of letter box
     if (letterPosition === -1) {
       letterColor = "grey";
     } else {
       // now, letter is definitely in word
       // if letter index and right guess index are the same
       // letter is in the right position
-      if (currentGuess[i] === rightGuess[i]) {
+      if (letter === rightGuess[i]) {
         // shade box green
         letterColor = "green";
       } else {
