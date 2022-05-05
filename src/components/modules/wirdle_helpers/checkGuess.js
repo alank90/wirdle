@@ -3,16 +3,24 @@ import shadeKeyBoard from "./shadeKeyboard";
 
 export default function checkGuess(
   guessesRemaining,
-  rightGuessString,
   currentGuess,
-  nextLetter
+  nextLetter,
+  rightGuessString
 ) {
-  let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+  let wirtleState = {
+    guessesRemaining: guessesRemaining,
+    currentGuess: currentGuess,
+    nextLetter: nextLetter,
+  };
+  let row =
+    document.getElementsByClassName("letter-row")[
+      6 - wirtleState.guessesRemaining
+    ];
   let guessString = "";
   let rightGuess = Array.from(rightGuessString);
 
   // Convert to a string from an array
-  for (const val of currentGuess) {
+  for (const val of wirtleState.currentGuess) {
     guessString += val;
   }
 
@@ -28,7 +36,7 @@ export default function checkGuess(
   for (let i = 0; i < 5; i++) {
     let letterColor = "";
     let box = row.children[i];
-    let letter = currentGuess[i];
+    let letter = wirtleState.currentGuess[i];
 
     // Check if the letter is in the correct guess
     let letterPosition = rightGuess.indexOf(letter);
@@ -61,16 +69,18 @@ export default function checkGuess(
 
   if (guessString === rightGuessString) {
     alert("Alright!!! You guessed correctly. Game over!");
-    guessesRemaining = 0;
+    wirtleState.guessesRemaining = 0;
     return;
+  } else if (wirtleState.guessesRemaining !== 0) {
+    // Let's reset variables for next guess
+    wirtleState.guessesRemaining -= 1;
+    wirtleState.currentGuess = [];
+    wirtleState.nextLetter = 0;
   } else {
-    guessesRemaining -= 1;
-    currentGuess = [];
-    nextLetter = 0;
-
-    if (guessesRemaining === 0) {
+    if (wirtleState.guessesRemaining === 0) {
       alert("You've run out of guesses. Better luck next time. Game over!");
       alert("The correct word was: '${rightGuessString}");
     }
   }
+  return wirtleState;
 }

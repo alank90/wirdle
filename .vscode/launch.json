@@ -18,6 +18,12 @@
       "reAttach": true,
       "name": "Launch Firefox",
       "url": "http://localhost:3000",
+      "pathMappings": [
+        {
+          "url": "http://localhost:3000/src/components",
+          "path": "${workspaceFolder}/src/components"
+        }
+      ]
     }
   ]
 }

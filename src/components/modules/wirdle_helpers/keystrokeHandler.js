@@ -24,7 +24,12 @@ export default function () {
     }
 
     if (pressedKey === "Enter") {
-      checkGuess(guessesRemaining, rightGuessString, currentGuess, nextLetter);
+      ({ guessesRemaining, currentGuess, nextLetter } = checkGuess(
+        guessesRemaining,
+        currentGuess,
+        nextLetter,
+        rightGuessString
+      ));
       return;
     }
 
