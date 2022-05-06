@@ -11,6 +11,7 @@ let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 console.log(rightGuessString);
 
 export default function () {
+  // Keyboard event handler
   document.addEventListener("keyup", (e) => {
     if (guessesRemaining === 0) {
       return;

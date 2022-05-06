@@ -1,5 +1,6 @@
 import { WORDS } from "@/components/modules/words.js";
 import shadeKeyBoard from "./shadeKeyboard";
+import toastr from "toastr";
 
 export default function checkGuess(
   guessesRemaining,
@@ -26,11 +27,11 @@ export default function checkGuess(
 
   // Several basic validity checks on the guessString
   if (guessString.length != 5) {
-    alert("Not enough letters!.");
+    toastr.error("Not enough letters!.");
   }
 
   if (!WORDS.includes(guessString)) {
-    alert("Sorry. Word is not in list!");
+    toastr.error("Sorry. Word is not in list!");
   }
 
   for (let i = 0; i < 5; i++) {
@@ -38,7 +39,7 @@ export default function checkGuess(
     let box = row.children[i];
     let letter = wirtleState.currentGuess[i];
 
-    // Check if the letter is in the correct guess
+    // Check if the letter is in the correctGuess array
     let letterPosition = rightGuess.indexOf(letter);
 
     // Now determine what color to assign to background of letter box
@@ -63,12 +64,13 @@ export default function checkGuess(
     setTimeout(() => {
       // shade the box
       box.style.backgroundColor = letterColor;
+      // call shadeKeyBoard() to also shade bg of virtual keyboard
       shadeKeyBoard(letter, letterColor);
     }, delay);
   } // end for ... loop
 
   if (guessString === rightGuessString) {
-    alert("Alright!!! You guessed correctly. Game over!");
+    toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
     return;
   } else if (wirtleState.guessesRemaining !== 0) {
@@ -78,8 +80,8 @@ export default function checkGuess(
     wirtleState.nextLetter = 0;
   } else {
     if (wirtleState.guessesRemaining === 0) {
-      alert("You've run out of guesses. Better luck next time. Game over!");
-      alert("The correct word was: '${rightGuessString}");
+      toastr.error("You've run out of guesses. Better luck next time. Game over!");
+      toastr.info("The correct word was: '${rightGuessString}");
     }
   }
   return wirtleState;

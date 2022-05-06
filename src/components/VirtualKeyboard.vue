@@ -1,5 +1,5 @@
 <template>
-  <div id="keyboard-cont">
+  <div id="keyboard-cont" @click="clickHandler">
     <div class="first-row">
       <button class="keyboard-button">q</button
       ><button class="keyboard-button">w</button
@@ -36,6 +36,28 @@
     </div>
   </div>
 </template>
+
+<script setup>
+// === On-screen Keyboard Input Generator ====================== //
+/* ===  To get your on-screen keyboard functioning, all you have
+          to do is dispatch a key up event whenever any key on your 
+          on-screen keyboard is clicked.
+   ================================================================ */
+const clickHandler = (e) => {
+  const target = e.target;
+
+  if (!target.classList.contains("keyboard-button")) {
+    return;
+  }
+  let key = target.textContent;
+
+  if (key === "Del") {
+    key = "Backspace";
+  }
+
+  document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
+};
+</script>
 
 <style scoped>
 #keyboard-cont {
