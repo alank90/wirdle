@@ -1,6 +1,7 @@
 import { WORDS } from "@/components/modules/words.js";
 import shadeKeyBoard from "./shadeKeyboard";
 import toastr from "toastr";
+import animate from "./animate";
 
 export default function checkGuess(
   guessesRemaining,
@@ -62,6 +63,8 @@ export default function checkGuess(
 
     let delay = 250 * i;
     setTimeout(() => {
+      // flip box
+      animate(box, "flipInX");
       // shade the box
       box.style.backgroundColor = letterColor;
       // call shadeKeyBoard() to also shade bg of virtual keyboard
@@ -73,15 +76,19 @@ export default function checkGuess(
     toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
     return;
-  } else if (wirtleState.guessesRemaining !== 0) {
+  } else if (wirtleState.guessesRemaining > 1) {
     // Let's reset variables for next guess
     wirtleState.guessesRemaining -= 1;
     wirtleState.currentGuess = [];
     wirtleState.nextLetter = 0;
   } else {
-    if (wirtleState.guessesRemaining === 0) {
-      toastr.error("You've run out of guesses. Better luck next time. Game over!");
-      toastr.info("The correct word was: '${rightGuessString}");
+    if (wirtleState.guessesRemaining === 1) {
+      toastr.error(
+        "You've run out of guesses. Better luck next time. Game over!"
+      );
+      toastr.info(`The correct word was: ${rightGuessString}`);
+    } else {
+      toastr.error("Sorry! Error. Please start again.");
     }
   }
   return wirtleState;

@@ -1,12 +1,13 @@
 import { WORDS } from "@/components/modules/words.js";
 import checkGuess from "./checkGuess";
+import animate from "./animate.js";
 
 const Number_Of_Guesses = 6;
 let guessesRemaining = Number_Of_Guesses;
 let currentGuess = [];
 let nextLetter = 0;
-let pressedKey = null;
-let found = null;
+let pressedKey = "";
+let found = "";
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 console.log(rightGuessString);
 
@@ -25,12 +26,13 @@ export default function () {
     }
 
     if (pressedKey === "Enter") {
-      ({ guessesRemaining, currentGuess, nextLetter } = checkGuess(
-        guessesRemaining,
-        currentGuess,
-        nextLetter,
-        rightGuessString
-      ));
+      ({ guessesRemaining, currentGuess, nextLetter } =
+        checkGuess(
+          guessesRemaining,
+          currentGuess,
+          nextLetter,
+          rightGuessString
+        ) || {});
       return;
     }
 
@@ -57,6 +59,7 @@ function insertLetter(pressedKey) {
 
   let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
   let box = row.children[nextLetter];
+  animate(box, "pulse");
   box.textContent = pressedKey;
   box.classList.add("filled-box");
   currentGuess.push(pressedKey);

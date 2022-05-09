@@ -38,8 +38,8 @@
 </template>
 
 <script setup>
-// === On-screen Keyboard Input Generator ====================== //
-/* ===  To get your on-screen keyboard functioning, all you have
+// ==== On-screen Keyboard Input Generator ======================== //
+/* ==== To get your on-screen keyboard functioning, all you have
           to do is dispatch a key up event whenever any key on your 
           on-screen keyboard is clicked.
    ================================================================ */
