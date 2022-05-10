@@ -4,13 +4,16 @@
 
 <script setup>
 import initBoard from "./modules/initializeBoard.js";
+import keystrokeHandler from "./modules/wirdle_helpers/keystrokeHandler.js";
 
 const resetBoard = () => {
   console.log("stop clicking me!");
   // Need to remove all chidren of #gameBoard
-  // *** Code here ****
+  const el = document.getElementById("game-board");
+  el.replaceChildren();
 
   // Then redraw board
   initBoard(6);
+  keystrokeHandler();
 };
 </script>
