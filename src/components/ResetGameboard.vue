@@ -4,7 +4,7 @@
 
 <script setup>
 import initBoard from "./modules/initializeBoard.js";
-import keystrokeHandler from "./modules/wirdle_helpers/keystrokeHandler.js";
+import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler.js";
 
 const resetBoard = () => {
   console.log("stop clicking me!");
@@ -14,6 +14,6 @@ const resetBoard = () => {
 
   // Then redraw board
   initBoard(6);
-  keystrokeHandler();
+  useKeystrokeHandler();
 };
 </script>

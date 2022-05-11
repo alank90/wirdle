@@ -10,14 +10,14 @@
 import { onMounted } from "vue";
 import initBoard from "@/components/modules/initializeBoard.js";
 import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
-import keystrokeHandler from "@/components/modules/wirdle_helpers/keystrokeHandler.js";
+import { useKeystrokeHandler } from "@/components/modules/wirdle_helpers/keystrokeHandler.js";
 import ResetGameboard from "./ResetGameboard.vue";
 import "@/assets/css/gameBoard.css";
 
 // Initialize Board
 onMounted(() => {
   initBoard(6);
-  keystrokeHandler();
+  document.addEventListener("keyup", useKeystrokeHandler);
 });
 </script>
 

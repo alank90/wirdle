@@ -1,19 +1,9 @@
-import { WORDS } from "@/components/modules/words.js";
 import shadeKeyBoard from "./shadeKeyboard";
+import { WORDS } from "../words";
 import toastr from "toastr";
 import animate from "./animate";
 
-export default function checkGuess(
-  guessesRemaining,
-  currentGuess,
-  nextLetter,
-  rightGuessString
-) {
-  let wirtleState = {
-    guessesRemaining: guessesRemaining,
-    currentGuess: currentGuess,
-    nextLetter: nextLetter,
-  };
+export default function checkGuess(wirtleState, rightGuessString) {
   let row =
     document.getElementsByClassName("letter-row")[
       6 - wirtleState.guessesRemaining
@@ -75,6 +65,7 @@ export default function checkGuess(
   if (guessString === rightGuessString) {
     toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
+    wirtleState.newGame = true;
     return;
   } else if (wirtleState.guessesRemaining > 1) {
     // Let's reset variables for next guess
@@ -83,6 +74,7 @@ export default function checkGuess(
     wirtleState.nextLetter = 0;
   } else {
     if (wirtleState.guessesRemaining === 1) {
+      wirtleState.newGame = true;
       toastr.error(
         "You've run out of guesses. Better luck next time. Game over!"
       );
