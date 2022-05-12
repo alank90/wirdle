@@ -65,7 +65,6 @@ export default function checkGuess(wirtleState, rightGuessString) {
   if (guessString === rightGuessString) {
     toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
-    wirtleState.newGame = true;
     return;
   } else if (wirtleState.guessesRemaining > 1) {
     // Let's reset variables for next guess

@@ -2,59 +2,57 @@ import { WORDS } from "@/components/modules/words.js";
 import checkGuess from "./checkGuess";
 import animate from "./animate.js";
 
-// Initialize Vars
-const Number_Of_Guesses = 6;
+export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
+  let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
+  console.log(rightGuessString);
 
-let wirtleState = {
-  guessesRemaining: Number_Of_Guesses,
-  currentGuess: [],
-  nextLetter: 0,
-  pressedKey: "",
-  found: "",
-  newGame: false,
-};
-
-let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-console.log(rightGuessString);
-
-export function useKeystrokeHandler(e) {
-  // Keyboard event handler
-  // First check if it is a new game. If yes reset variables
-  if (wirtleState.newGame) {
-    wirtleState.guessesRemaining = Number_Of_Guesses;
-    wirtleState.currentGuess = [];
-    wirtleState.nextLetter = 0;
-    wirtleState.pressedKey = "";
-    wirtleState.found = "";
-    wirtleState.newGame = false;
-    rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-    console.log(rightGuessString);
-  }
-  if (wirtleState.guessesRemaining === 0) {
-    return;
+  if (!wirtleState.newGame) {
+    document.addEventListener("keyup", handleKeystroke);
   }
 
-  wirtleState.pressedKey = String(e.key);
+  function handleKeystroke(e) {
+    // ========== Keyboard event handler ======================= //
+    // First check if it is a new game. If yes reset variables
+    if (wirtleState.newGame) {
+      wirtleState.guessesRemaining = Number_Of_Guesses;
+      wirtleState.currentGuess = [];
+      wirtleState.nextLetter = 0;
+      wirtleState.pressedKey = "";
+      wirtleState.found = "";
+      wirtleState.newGame = false;
+      rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
+      console.log(rightGuessString);
+    }
+    if (wirtleState.guessesRemaining === 0) {
+      return;
+    }
 
-  if (wirtleState.pressedKey === "Backspace" && wirtleState.nextLetter !== 0) {
-    deleteLetter();
-    return;
-  }
+    wirtleState.pressedKey = String(e.key);
 
-  if (wirtleState.pressedKey === "Enter") {
-    ({ wirtleState } = checkGuess(wirtleState, rightGuessString) || {});
-    return;
-  }
+    if (
+      wirtleState.pressedKey === "Backspace" &&
+      wirtleState.nextLetter !== 0
+    ) {
+      deleteLetter();
+      return;
+    }
 
-  wirtleState.found = wirtleState.pressedKey.match(/[a-z]/gi);
-  if (!wirtleState.found || wirtleState.found.length > 1) {
-    return;
-  } else {
-    insertLetter(wirtleState.pressedKey);
-  }
+    if (wirtleState.pressedKey === "Enter") {
+      wirtleState = checkGuess(wirtleState, rightGuessString) || {};
+      return;
+    }
 
+    wirtleState.found = wirtleState.pressedKey.match(/[a-z]/gi);
+    if (!wirtleState.found || wirtleState.found.length > 1) {
+      return;
+    } else {
+      insertLetter(wirtleState.pressedKey);
+    }
+  } // end handleKeystroke
+
+  // ============================================= //
   // ========== Functions ======================== //
-
+  // ============================================= //
   function insertLetter(pressedKey) {
     if (wirtleState.nextLetter === 5) {
       return;
@@ -85,6 +83,9 @@ export function useKeystrokeHandler(e) {
     wirtleState.currentGuess.pop();
     wirtleState.nextLetter -= 1;
   }
+
+  // expose managed state as return value
+  return { wirtleState };
 }
 // ========================================================== //
 // ============ End of default export ======================= //
