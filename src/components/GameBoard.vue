@@ -3,7 +3,7 @@
 
   <VirtualKeyboard></VirtualKeyboard>
 
-  <ResetGameboard></ResetGameboard>
+  <ResetGameboard @updateState="initVars"></ResetGameboard>
 </template>
 
 <script setup>
@@ -14,20 +14,24 @@ import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
 import ResetGameboard from "./ResetGameboard.vue";
 import "@/assets/css/gameBoard.css";
 
+// Initialize Vars
+const Number_Of_Guesses = 6;
+let wirtleState = reactive({});
+
+// Function to intialize wirtleState object
+const initVars = () => {
+  wirtleState.guessesRemaining = Number_Of_Guesses;
+  wirtleState.currentGuess = [];
+  wirtleState.nextLetter = 0;
+  wirtleState.pressedKey = "";
+  wirtleState.found = "";
+  wirtleState.newGame = false;
+};
+
 // Initialize Board
 onMounted(() => {
-  // Initialize Vars
-  const Number_Of_Guesses = 6;
-
-  const wirtleState = reactive({
-    guessesRemaining: Number_Of_Guesses,
-    currentGuess: [],
-    nextLetter: 0,
-    pressedKey: "",
-    found: "",
-    newGame: false,
-  });
   initBoard(6);
+  initVars();
   useKeystrokeHandler(wirtleState, Number_Of_Guesses);
 });
 </script>
