@@ -7,7 +7,8 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import { WORDS } from "@/components/modules/words.js";
 import initBoard from "@/components/modules/initializeBoard.js";
 import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler";
 import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
@@ -17,9 +18,11 @@ import "@/assets/css/gameBoard.css";
 // Initialize Vars
 const Number_Of_Guesses = 6;
 let wirtleState = reactive({});
+let rightGuessString = ref("");
 
 // Function to intialize wirtleState object
 const initVars = () => {
+  rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
   wirtleState.currentGuess = [];
   wirtleState.nextLetter = 0;
@@ -32,7 +35,7 @@ const initVars = () => {
 onMounted(() => {
   initBoard(6);
   initVars();
-  useKeystrokeHandler(wirtleState, Number_Of_Guesses);
+  useKeystrokeHandler(wirtleState, Number_Of_Guesses, rightGuessString);
 });
 </script>
 

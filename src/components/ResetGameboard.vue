@@ -6,7 +6,7 @@
 import { defineEmits } from "vue";
 import initBoard from "./modules/initializeBoard.js";
 
-const emit = defineEmits("updateState");
+const emit = defineEmits(["updateState"]);
 
 const resetBoard = () => {
   // Need to remove all chidren of #gameBoard

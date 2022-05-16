@@ -1,19 +1,21 @@
-import { WORDS } from "@/components/modules/words.js";
 import checkGuess from "./checkGuess";
 import animate from "./animate.js";
 
-export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
-  let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-  console.log(rightGuessString);
+export function useKeystrokeHandler(
+  wirtleState,
+  Number_Of_Guesses,
+  rightGuessString
+) {
+  console.log(rightGuessString.value);
 
   if (!wirtleState.newGame) {
-    document.addEventListener("keyup", handleKeystroke);
+    document.addEventListener("keyup", handleKeystroke.bind(null, wirtleState));
   }
 
-  function handleKeystroke(e) {
+  function handleKeystroke(wirtleState, e) {
     // ========== Keyboard event handler ======================= //
     // First check if it is a new game. If yes reset variables
-    if (wirtleState.newGame) {
+    /* if (wirtleState.newGame) {
       wirtleState.guessesRemaining = Number_Of_Guesses;
       wirtleState.currentGuess = [];
       wirtleState.nextLetter = 0;
@@ -22,9 +24,11 @@ export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
       wirtleState.newGame = false;
       rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
       console.log(rightGuessString);
-    }
+    } */
+    console.log(rightGuessString.value);
+
     if (wirtleState.guessesRemaining === 0) {
-      return;
+      return { wirtleState };
     }
 
     wirtleState.pressedKey = String(e.key);
@@ -34,19 +38,20 @@ export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
       wirtleState.nextLetter !== 0
     ) {
       deleteLetter();
-      return;
+      return { wirtleState };
     }
 
     if (wirtleState.pressedKey === "Enter") {
-      wirtleState = checkGuess(wirtleState, rightGuessString) || {};
-      return;
+      wirtleState = checkGuess(wirtleState, rightGuessString.value) || {};
+      return { wirtleState };
     }
 
     wirtleState.found = wirtleState.pressedKey.match(/[a-z]/gi);
     if (!wirtleState.found || wirtleState.found.length > 1) {
-      return;
+      return { wirtleState };
     } else {
       insertLetter(wirtleState.pressedKey);
+      return { wirtleState };
     }
   } // end handleKeystroke
 
@@ -64,6 +69,7 @@ export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
       document.getElementsByClassName("letter-row")[
         6 - wirtleState.guessesRemaining
       ];
+
     let box = row.children[wirtleState.nextLetter];
     animate(box, "pulse");
     box.textContent = pressedKey;
@@ -83,9 +89,6 @@ export function useKeystrokeHandler(wirtleState, Number_Of_Guesses) {
     wirtleState.currentGuess.pop();
     wirtleState.nextLetter -= 1;
   }
-
-  // expose managed state as return value
-  return { wirtleState };
 }
 // ========================================================== //
 // ============ End of default export ======================= //
