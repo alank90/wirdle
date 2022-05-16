@@ -77,7 +77,7 @@ export default function checkGuess(wirtleState, rightGuessString) {
       toastr.error(
         "You've run out of guesses. Better luck next time. Game over!"
       );
-      toastr.info(`The correct word was: ${rightGuessString}`);
+      toastr.info(`The correct word was: ${rightGuessString.value}`);
     } else {
       toastr.error("Sorry! Error. Please start again.");
     }
