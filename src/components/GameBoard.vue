@@ -3,7 +3,10 @@
 
   <VirtualKeyboard></VirtualKeyboard>
 
-  <ResetGameboard @updateState="initVars"></ResetGameboard>
+  <ResetGameboard
+    v-show="wirtleState.newGame"
+    @updateState="initVars"
+  ></ResetGameboard>
 </template>
 
 <script setup>
@@ -20,21 +23,28 @@ const Number_Of_Guesses = 6;
 let wirtleState = reactive({});
 let rightGuessString = ref("");
 
-// Function to intialize wirtleState object
-const initVars = () => {
+// Function to intialize wirtleState object & revert VK background colors to grey
+const initVars = (data) => {
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
   wirtleState.currentGuess = [];
   wirtleState.nextLetter = 0;
   wirtleState.pressedKey = "";
   wirtleState.found = "";
-  wirtleState.newGame = false;
+  wirtleState.newGame = data;
+
+  const buttonElems = document.getElementsByClassName("keyboard-button");
+  const color = "#e9e9ed";
+
+  for (const el of buttonElems) {
+    el.style.backgroundColor = color;
+  }
 };
 
 // Initialize Board
 onMounted(() => {
   initBoard(6);
-  initVars();
+  initVars(false);
   useKeystrokeHandler(wirtleState, Number_Of_Guesses, rightGuessString);
 });
 </script>

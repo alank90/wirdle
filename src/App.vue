@@ -21,8 +21,29 @@ import "./assets/css/main.css";
 }
 
 img[alt="Wirdle logo"] {
-  width: 450px;
-  margin-bottom: 30px;
-  margin-top: -30px;
+  position: absolute;
+  width: 550px;
+  margin: 0 auto;
+  top: 300px;
+  left: 0;
+  right: 0;
+  animation: 5s slidein;
+  transform: translateY(-1200px);
+  z-index: -99;
+}
+
+/* Keyframes */
+@keyframes slidein {
+  from {
+    transform: translateY(-1200px);
+  }
+
+  50% {
+    transform: translateY(300px);
+  }
+
+  to {
+    transform: translateY(-1200px);
+  }
 }
 </style>

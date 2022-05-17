@@ -14,17 +14,6 @@ export function useKeystrokeHandler(
 
   function handleKeystroke(wirtleState, e) {
     // ========== Keyboard event handler ======================= //
-    // First check if it is a new game. If yes reset variables
-    /* if (wirtleState.newGame) {
-      wirtleState.guessesRemaining = Number_Of_Guesses;
-      wirtleState.currentGuess = [];
-      wirtleState.nextLetter = 0;
-      wirtleState.pressedKey = "";
-      wirtleState.found = "";
-      wirtleState.newGame = false;
-      rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-      console.log(rightGuessString);
-    } */
     console.log(rightGuessString.value);
 
     if (wirtleState.guessesRemaining === 0) {

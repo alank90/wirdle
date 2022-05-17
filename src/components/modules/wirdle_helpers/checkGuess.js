@@ -65,7 +65,8 @@ export default function checkGuess(wirtleState, rightGuessString) {
   if (guessString === rightGuessString) {
     toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
-    return;
+    wirtleState.newGame = true;
+    return wirtleState;
   } else if (wirtleState.guessesRemaining > 1) {
     // Let's reset variables for next guess
     wirtleState.guessesRemaining -= 1;
@@ -77,7 +78,7 @@ export default function checkGuess(wirtleState, rightGuessString) {
       toastr.error(
         "You've run out of guesses. Better luck next time. Game over!"
       );
-      toastr.info(`The correct word was: ${rightGuessString.value}`);
+      toastr.info(`The correct word was: ${rightGuessString}`);
     } else {
       toastr.error("Sorry! Error. Please start again.");
     }

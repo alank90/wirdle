@@ -1,5 +1,5 @@
 <template>
-  <h1>Wirtle - {{ props.msg }}</h1>
+  <h1>Wirdle - {{ props.msg }}</h1>
   <GameBoard></GameBoard>
 </template>
 
