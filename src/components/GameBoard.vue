@@ -16,6 +16,7 @@ import initBoard from "@/components/modules/initializeBoard.js";
 import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler";
 import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
 import ResetGameboard from "./ResetGameboard.vue";
+import toastr from "toastr";
 import "@/assets/css/gameBoard.css";
 
 // Initialize Vars
@@ -25,6 +26,15 @@ let rightGuessString = ref("");
 
 // Function to intialize wirtleState object & revert VK background colors to grey
 const initVars = (data) => {
+  const turns = localStorage.getItem("gamesPlayed");
+  if (turns % 3 === 0 && wirtleState.newGame === true) {
+    wirtleState.newGame = false;
+    toastr.error(
+      "You've reached your daily limit for wirdle. Come back tomorrow!"
+    );
+
+    return;
+  }
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
   wirtleState.currentGuess = [];
