@@ -1,6 +1,6 @@
 <template>
   <img alt="Wirdle logo" src="./assets/img/wirdle.jpeg" />
-  <Home msg="A Wordle clone" />
+  <Home />
 </template>
 
 <script setup>

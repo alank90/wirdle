@@ -9,22 +9,27 @@ import initBoard from "./modules/initializeBoard.js";
 // Vars
 const emit = defineEmits(["updateState"]);
 const data = false;
+let todaysDate = new Date().toDateString();
 
 let storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed")) || 0;
 console.log(storedGamesPlayed);
 const resetBoard = () => {
-  console.log(storedGamesPlayed);
   // Need to remove all chidren of #gameBoard
   const el = document.getElementById("game-board");
   el.replaceChildren();
 
   // Update # of games played
-  storedGamesPlayed = localStorage.getItem("gamesPlayed");
-  storedGamesPlayed = parseInt(storedGamesPlayed);
-  console.log(storedGamesPlayed);
+  // Check if this is first time. If it is need to setItem()
+  storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed"))
+    ? parseInt(localStorage.getItem("gamesPlayed"))
+    : 0;
+
   storedGamesPlayed += 1;
-  console.log(typeof storedGamesPlayed);
+  console.log(storedGamesPlayed);
   localStorage.setItem("gamesPlayed", parseInt(storedGamesPlayed));
+  if (storedGamesPlayed % 3 === 0) {
+    localStorage.setItem("dateLastPlayed", todaysDate);
+  }
 
   // Then redraw board
   initBoard(6);

@@ -23,12 +23,16 @@ import "@/assets/css/gameBoard.css";
 const Number_Of_Guesses = 6;
 let wirtleState = reactive({});
 let rightGuessString = ref("");
+let todaysDate = new Date().toDateString();
 
 // Function to intialize wirtleState object & revert VK background colors to grey
 const initVars = (data) => {
   const turns = localStorage.getItem("gamesPlayed");
-  if (turns % 3 === 0 && wirtleState.newGame === true) {
+  const lastPlayed = localStorage.getItem("dateLastPlayed");
+  console.log({ lastPlayed }, { todaysDate }, turns % 3);
+  if (turns % 3 === 0 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
+    localStorage.setItem("dateLastPlayed", todaysDate);
     toastr.error(
       "You've reached your daily limit for wirdle. Come back tomorrow!"
     );
