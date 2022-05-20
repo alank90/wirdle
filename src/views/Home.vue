@@ -1,7 +1,9 @@
 <template>
   <div class="container">
+    <img alt="Wirdle logo" src="../assets/img/wirdle.jpeg" />
+
     <h1>
-      Wirdle
+      Wirdle -
       <span class="typed-text">{{ typeValue }}</span>
       <span class="blinking-cursor">|</span>
       <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
@@ -17,7 +19,12 @@ import GameBoard from "@/components/GameBoard.vue";
 // Vars
 let typeValue = ref("");
 let typeStatus = false;
-let displayTextArray = ["- Play and Exercise Your Mind"];
+let displayTextArray = [
+  "Play and Exercise Your Mind",
+  "Guess the Wirdle in Six Tries",
+  "Hit Enter to Submit Guess",
+  "After each guess, the color of the tiles will change to show how close your guess was to the word.",
+];
 const typingSpeed = 100;
 const erasingSpeed = 100;
 const newTextDelay = 2000;
@@ -65,6 +72,11 @@ const eraseText = () => {
 h1 {
   font-family: var(--playfair);
   font-size: 1.8em;
+}
+
+img[alt="Wirdle logo"] {
+  width:100px;
+  margin: 0 5px 2px;
 }
 
 /* ============= Typewriter effects stylings ============ */

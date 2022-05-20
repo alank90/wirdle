@@ -48,7 +48,7 @@ const initVars = (data) => {
   wirtleState.newGame = data;
 
   const buttonElems = document.getElementsByClassName("keyboard-button");
-  const color = "#e9e9ed";
+  const color = "#d3d6da";
 
   for (const el of buttonElems) {
     el.style.backgroundColor = color;

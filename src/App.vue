@@ -1,5 +1,4 @@
 <template>
-  <img alt="Wirdle logo" src="./assets/img/wirdle.jpeg" />
   <Home />
 </template>
 
@@ -18,32 +17,5 @@ import "./assets/css/main.css";
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-img[alt="Wirdle logo"] {
-  position: absolute;
-  width: 550px;
-  margin: 0 auto;
-  top: 300px;
-  left: 0;
-  right: 0;
-  animation: 5s slidein;
-  transform: translateY(-1200px);
-  z-index: -99;
-}
-
-/* Keyframes */
-@keyframes slidein {
-  from {
-    transform: translateY(-1200px);
-  }
-
-  50% {
-    transform: translateY(300px);
-  }
-
-  to {
-    transform: translateY(-1200px);
-  }
 }
 </style>
