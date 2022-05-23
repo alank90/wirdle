@@ -29,7 +29,7 @@ let todaysDate = new Date().toDateString();
 const initVars = (data) => {
   const turns = localStorage.getItem("gamesPlayed");
   const lastPlayed = localStorage.getItem("dateLastPlayed");
-  console.log({ lastPlayed }, { todaysDate }, turns % 3);
+
   if (turns % 3 === 0 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
@@ -59,7 +59,7 @@ const initVars = (data) => {
 onMounted(() => {
   initBoard(6);
   initVars(false);
-  useKeystrokeHandler(wirtleState, Number_Of_Guesses, rightGuessString);
+  useKeystrokeHandler(wirtleState, rightGuessString);
 });
 </script>
 

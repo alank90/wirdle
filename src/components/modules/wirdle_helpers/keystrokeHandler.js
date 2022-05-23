@@ -3,7 +3,6 @@ import animate from "./animate.js";
 
 export function useKeystrokeHandler(
   wirtleState,
-  Number_Of_Guesses,
   rightGuessString
 ) {
   console.log(rightGuessString.value);

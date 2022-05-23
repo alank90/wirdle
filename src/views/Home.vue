@@ -2,7 +2,7 @@
   <div class="container">
     <img alt="Wirdle logo" src="../assets/img/wirdle.jpeg" />
 
-    <h1>
+    <h1 v-show="typeWriterEffectVisible">
       Wirdle -
       <span class="typed-text">{{ typeValue }}</span>
       <span class="blinking-cursor">|</span>
@@ -30,9 +30,29 @@ const erasingSpeed = 100;
 const newTextDelay = 2000;
 let displayTextArrayIndex = 0;
 let charIndex = 0;
+let typeWriterEffectVisible = ref(true);
 
 onMounted(() => {
   setTimeout(typeText, newTextDelay + 200);
+  /* const el = document.querySelector(
+    "#game-board > .letter-row:first-child > .letter-box:first-child"
+  );
+
+  // add eventlistener to toggle off typewriter effect on page
+  el.addEventListener("keyup", () => {
+    console.log("Im in toggle");
+    typeWriterEffectVisible.value = false;
+  }); */
+
+  // Add event listener to toggle type writer effect
+  document.addEventListener(
+    "keydown",
+    () => {
+      console.log("Im in toggle");
+      typeWriterEffectVisible.value = false;
+    },
+    { once: true }
+  );
 });
 
 // Methods
@@ -75,7 +95,7 @@ h1 {
 }
 
 img[alt="Wirdle logo"] {
-  width:100px;
+  width: 100px;
   margin: 0 5px 2px;
 }
 
