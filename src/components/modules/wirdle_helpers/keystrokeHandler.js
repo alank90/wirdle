@@ -1,5 +1,8 @@
 import checkGuess from "./checkGuess";
 import animate from "./animate.js";
+import easterEgg from "./easterEgg.js";
+
+easterEgg();
 
 export function useKeystrokeHandler(
   wirtleState,

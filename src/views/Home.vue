@@ -1,13 +1,17 @@
 <template>
+  <Transition>
+    <h1 class="main-title" v-show="!typeWriterEffectVisible">Wirdle</h1>
+  </Transition>
   <div class="container">
     <img alt="Wirdle logo" src="../assets/img/wirdle.jpeg" />
-
-    <h1 v-show="typeWriterEffectVisible">
-      Wirdle -
-      <span class="typed-text">{{ typeValue }}</span>
-      <span class="blinking-cursor">|</span>
-      <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
-    </h1>
+    <Transition name="fade">
+      <h1 v-show="typeWriterEffectVisible">
+        Wirdle -
+        <span class="typed-text">{{ typeValue }}</span>
+        <span class="blinking-cursor">|</span>
+        <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
+      </h1>
+    </Transition>
   </div>
   <GameBoard></GameBoard>
 </template>
@@ -31,24 +35,16 @@ const newTextDelay = 2000;
 let displayTextArrayIndex = 0;
 let charIndex = 0;
 let typeWriterEffectVisible = ref(true);
+let typeWriterEffectRunning = true;
 
 onMounted(() => {
   setTimeout(typeText, newTextDelay + 200);
-  /* const el = document.querySelector(
-    "#game-board > .letter-row:first-child > .letter-box:first-child"
-  );
-
-  // add eventlistener to toggle off typewriter effect on page
-  el.addEventListener("keyup", () => {
-    console.log("Im in toggle");
-    typeWriterEffectVisible.value = false;
-  }); */
 
   // Add event listener to toggle type writer effect
   document.addEventListener(
     "keydown",
     () => {
-      console.log("Im in toggle");
+      typeWriterEffectRunning = false;
       typeWriterEffectVisible.value = false;
     },
     { once: true }
@@ -57,33 +53,37 @@ onMounted(() => {
 
 // Methods
 const typeText = () => {
-  if (charIndex < displayTextArray[displayTextArrayIndex].length) {
-    if (!typeStatus) typeStatus = true;
-    typeValue.value +=
-      displayTextArray[displayTextArrayIndex].charAt(charIndex);
-    charIndex += 1;
-    setTimeout(typeText, typingSpeed);
-  } else {
-    typeStatus = false;
-    setTimeout(eraseText, newTextDelay);
+  if (typeWriterEffectRunning) {
+    if (charIndex < displayTextArray[displayTextArrayIndex].length) {
+      if (!typeStatus) typeStatus = true;
+      typeValue.value +=
+        displayTextArray[displayTextArrayIndex].charAt(charIndex);
+      charIndex += 1;
+      setTimeout(typeText, typingSpeed);
+    } else {
+      typeStatus = false;
+      setTimeout(eraseText, newTextDelay);
+    }
   }
 };
 
 const eraseText = () => {
-  if (charIndex > 0) {
-    if (!typeStatus) typeStatus = true;
-    typeValue.value = displayTextArray[displayTextArrayIndex].substring(
-      0,
-      charIndex - 1
-    );
-    charIndex -= 1;
-    setTimeout(eraseText, erasingSpeed);
-  } else {
-    typeStatus = false;
-    displayTextArrayIndex += 1;
-    if (displayTextArrayIndex >= displayTextArray.length)
-      displayTextArrayIndex = 0;
-    setTimeout(typeText, typingSpeed + 1000);
+  if (typeWriterEffectRunning) {
+    if (charIndex > 0) {
+      if (!typeStatus) typeStatus = true;
+      typeValue.value = displayTextArray[displayTextArrayIndex].substring(
+        0,
+        charIndex - 1
+      );
+      charIndex -= 1;
+      setTimeout(eraseText, erasingSpeed);
+    } else {
+      typeStatus = false;
+      displayTextArrayIndex += 1;
+      if (displayTextArrayIndex >= displayTextArray.length)
+        displayTextArrayIndex = 0;
+      setTimeout(typeText, typingSpeed + 1000);
+    }
   }
 };
 </script>
@@ -94,9 +94,37 @@ h1 {
   font-size: 1.8em;
 }
 
+h1.main-title {
+  font-family: var(--playfair);
+  font-size: 2.8em;
+  border-bottom: #2c3e50 solid 1.5px;
+  margin-top: -50px;
+  margin-bottom: 20px;
+}
+
 img[alt="Wirdle logo"] {
   width: 100px;
-  margin: 0 5px 2px;
+  margin: 0 5px -20px 2px;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* ============= Typewriter effects stylings ============ */
@@ -108,11 +136,13 @@ img[alt="Wirdle logo"] {
   align-items: center;
 }
 
-h1 span.typed-text {
+span.typed-text {
   color: #1a9714;
+  font-family: var(--playfair);
 }
+
 .blinking-cursor {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: #2c3e50;
   -webkit-animation: 1s blink step-end infinite;
   -moz-animation: 1s blink step-end infinite;

@@ -81,6 +81,8 @@ const clickHandler = (e) => {
   padding: 0.5rem;
   margin: 0 2px;
   cursor: pointer;
+  border-radius: 4px;
   text-transform: uppercase;
+  user-select: none;
 }
 </style>
