@@ -1,7 +1,7 @@
 import { defineEmits } from "vue";
 import toastr from "toastr";
 
-export default function easterEgg() {
+export default function useEasterEgg() {
   // Vars
   let buffer = [];
   let lastKeyTime = Date.now();
