@@ -5,6 +5,7 @@
 <script setup>
 import { defineEmits } from "vue";
 import initBoard from "./modules/initializeBoard.js";
+import easterEgg from "@/components/modules/wirdle_helpers/easterEgg.js";
 
 // Vars
 const emit = defineEmits(["updateState"]);
@@ -25,10 +26,11 @@ const resetBoard = () => {
     : 0;
 
   storedGamesPlayed += 1;
-  console.log(storedGamesPlayed);
   localStorage.setItem("gamesPlayed", parseInt(storedGamesPlayed));
   if (storedGamesPlayed % 3 === 0) {
     localStorage.setItem("dateLastPlayed", todaysDate);
+    console.log("running easteregg");
+    easterEgg();
   }
 
   // Then redraw board
