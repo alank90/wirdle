@@ -18,6 +18,8 @@ import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
 import ResetGameboard from "./ResetGameboard.vue";
 import toastr from "toastr";
 import "@/assets/css/gameBoard.css";
+import useEasterEgg from "@/components/modules/wirdle_helpers/useEasterEgg.js";
+
 
 // Initialize Vars
 const Number_Of_Guesses = 6;
@@ -33,6 +35,7 @@ const initVars = (data) => {
   if (turns % 3 === 0 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
+    useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
     toastr.error(
       "You've reached your daily limit for wirdle. Come back tomorrow!"
     );
