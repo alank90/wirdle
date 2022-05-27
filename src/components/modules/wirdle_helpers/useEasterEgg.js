@@ -8,9 +8,8 @@ export default function useEasterEgg(
 ) {
   // Vars
   let buffer = [];
-  let lastKeyTime = Date.now();
   const data = false;
-  const controlKeysArray = ["shift", "control", "alt", "w"];
+  const controlKeysArray = ["shift", "control", "alt", "escape"];
 
   // checks whether an element is in array
   const arrayCheck = (element) => buffer.includes(element);
@@ -26,9 +25,9 @@ export default function useEasterEgg(
 
     if (controlKeysArray.every(arrayCheck)) {
       console.log({ buffer });
-      console.log("shift,alt ctrl,w are all in buffer array");
+      console.log("shift,alt ctrl,esc are all in buffer array");
       localStorage.setItem("gamesPlayed", 2);
-      
+
       // ========= Reinitialize Gameboard.vue state ============== //
       rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
       wirtleState.guessesRemaining = Number_Of_Guesses;
@@ -52,14 +51,5 @@ export default function useEasterEgg(
 
       return;
     }
-
-    // const currentTime = Date.now();
-
-    /* if (currentTime - lastKeyTime > 10000) {
-      buffer = [];
-    }
- */
-    //buffer.push(key);
-    //lastKeyTime = currentTime;
   });
 }

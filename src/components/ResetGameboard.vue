@@ -12,7 +12,7 @@ const data = false;
 let todaysDate = new Date().toDateString();
 
 let storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed")) || 0;
-console.log(storedGamesPlayed);
+
 const resetBoard = () => {
   // Need to remove all chidren of #gameBoard
   const el = document.getElementById("game-board");

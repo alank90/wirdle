@@ -39,6 +39,7 @@ let typeWriterEffectRunning = true;
 
 onMounted(() => {
   setTimeout(typeText, newTextDelay + 200);
+  resetGamesPlayed();
 
   // Add event listener to toggle type writer effect
   document.addEventListener(
@@ -84,6 +85,21 @@ const eraseText = () => {
         displayTextArrayIndex = 0;
       setTimeout(typeText, typingSpeed + 1000);
     }
+  }
+};
+
+const resetGamesPlayed = () => {
+  let todaysDate = new Date().toDateString();
+  todaysDate = new Date(todaysDate);
+  todaysDate = todaysDate.getTime(todaysDate);
+
+  let storedDate = localStorage.getItem("dateLastPlayed");
+  storedDate = new Date(storedDate);
+  storedDate = storedDate.getTime(storedDate);
+
+  if (todaysDate > storedDate) {
+    localStorage.setItem("dateLastPlayed", new Date(todaysDate).toDateString());
+    localStorage.setItem("gamesPlayed", 0);
   }
 };
 </script>

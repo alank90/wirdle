@@ -20,7 +20,6 @@ import toastr from "toastr";
 import "@/assets/css/gameBoard.css";
 import useEasterEgg from "@/components/modules/wirdle_helpers/useEasterEgg.js";
 
-
 // Initialize Vars
 const Number_Of_Guesses = 6;
 let wirtleState = reactive({});
@@ -31,8 +30,7 @@ let todaysDate = new Date().toDateString();
 const initVars = (data) => {
   const turns = localStorage.getItem("gamesPlayed");
   const lastPlayed = localStorage.getItem("dateLastPlayed");
-
-  if (turns % 3 === 0 && lastPlayed === todaysDate) {
+  if (turns >= 3 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
     useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
