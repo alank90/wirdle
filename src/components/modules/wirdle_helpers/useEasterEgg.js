@@ -9,7 +9,7 @@ export default function useEasterEgg(
   // Vars
   let buffer = [];
   const data = false;
-  const controlKeysArray = ["shift", "control", "alt", "escape"];
+  const controlKeysArray = ["shift", "control", "alt", "@"];
 
   // checks whether an element is in array
   const arrayCheck = (element) => buffer.includes(element);
@@ -25,7 +25,7 @@ export default function useEasterEgg(
 
     if (controlKeysArray.every(arrayCheck)) {
       console.log({ buffer });
-      console.log("shift,alt ctrl,esc are all in buffer array");
+      console.log("shift,alt ctrl,@ are all in buffer array");
       localStorage.setItem("gamesPlayed", 2);
 
       // ========= Reinitialize Gameboard.vue state ============== //
