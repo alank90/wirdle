@@ -1,11 +1,22 @@
 <template>
   <Transition>
-    <h1 class="main-title" v-show="!typeWriterEffectVisible">Wirdle</h1>
+    <h1 class="main-title" v-show="!typeWriterEffectVisible">
+      <img
+        v-show="!typeWriterEffectVisible"
+        alt="Wirdle logo"
+        src="../assets/img/wirdle.jpeg"
+      />
+      Wirdle
+    </h1>
   </Transition>
   <div class="container">
-    <img alt="Wirdle logo" src="../assets/img/wirdle.jpeg" />
     <Transition name="fade">
       <h1 v-show="typeWriterEffectVisible">
+        <img
+          v-show="typeWriterEffectVisible"
+          alt="Wirdle logo"
+          src="../assets/img/wirdle.jpeg"
+        />
         Wirdle -
         <span class="typed-text">{{ typeValue }}</span>
         <span class="blinking-cursor">|</span>

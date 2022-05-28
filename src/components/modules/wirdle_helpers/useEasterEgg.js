@@ -1,6 +1,15 @@
 import toastr from "toastr";
 import { WORDS } from "@/components/modules/words.js";
 
+/**
+ * Function for adding extra turns for playing wirdle
+ *
+ * @export
+ * @param {*} wirtleState
+ * @param {*} rightGuessString
+ * @param {*} Number_Of_Guesses
+ */
+
 export default function useEasterEgg(
   wirtleState,
   rightGuessString,

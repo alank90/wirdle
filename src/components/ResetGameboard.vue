@@ -13,13 +13,16 @@ let todaysDate = new Date().toDateString();
 
 let storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed")) || 0;
 
+/**
+ * resetBoard - resets the game board in DOM
+ */
 const resetBoard = () => {
   // Need to remove all chidren of #gameBoard
   const el = document.getElementById("game-board");
   el.replaceChildren();
 
   // Update # of games played
-  // Check if this is first time. If it is need to setItem()
+  // Check if this is first time. If it is need to localStorage.setItem()
   storedGamesPlayed = parseInt(localStorage.getItem("gamesPlayed"))
     ? parseInt(localStorage.getItem("gamesPlayed"))
     : 0;

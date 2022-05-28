@@ -1,6 +1,13 @@
+/**
+ * Creates the original Wirtle board in the DOM
+ *
+ * @export
+ * @param { integer } Initial_Number_Of_Guesses - set to 6
+ * @exports {initBoard function}
+ */
 export default function initBoard(Initial_Number_Of_Guesses) {
   let board = document.getElementById("game-board");
-  
+
   for (let i = 0; i < Initial_Number_Of_Guesses; i++) {
     let row = document.createElement("div");
     row.className = "letter-row";

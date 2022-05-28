@@ -3,6 +3,14 @@ import { WORDS } from "../words";
 import toastr from "toastr";
 import animate from "./animate";
 
+/**
+ * checkGuess -
+ *
+ * @export
+ * @param { object } wirtleState - Holds state info of wirtle game
+ * @param {string } rightGuessString - The correct word
+ * @return { wirtleState }
+ */
 export default function checkGuess(wirtleState, rightGuessString) {
   let row =
     document.getElementsByClassName("letter-row")[

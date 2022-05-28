@@ -1,6 +1,13 @@
 import checkGuess from "./checkGuess";
 import animate from "./animate.js";
 
+/**
+ * useKeystrokeHandler - Vue Composable
+ *
+ * @export
+ * @param { object } wirtleState - object containing state of game
+ * @param {  string } rightGuessString - The current word for the game
+ */
 export function useKeystrokeHandler(wirtleState, rightGuessString) {
   console.log(rightGuessString.value);
 
@@ -8,6 +15,12 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
     document.addEventListener("keyup", handleKeystroke.bind(null, wirtleState));
   }
 
+  /**
+   * handleKeystroke - callback function for the "keyup" Event Listener
+   * @param {object} wirtleState
+   * @param {object} e - event object
+   * @return { wirtleState }
+   */
   function handleKeystroke(wirtleState, e) {
     // ========== Keyboard event handler ======================= //
     console.log(rightGuessString.value);
@@ -43,6 +56,12 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
   // ============================================= //
   // ========== Functions ======================== //
   // ============================================= //
+  /**
+   * insertLetter - inserts pressed keyboard letter into DOM
+   *
+   * @param { string } pressedKey
+   * @return {*}
+   */
   function insertLetter(pressedKey) {
     if (wirtleState.nextLetter === 5) {
       return;
@@ -63,6 +82,10 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
     wirtleState.nextLetter += 1;
   }
 
+  /**
+   * deleteLetter- deletes letter from DOM on keypress Del
+   *
+   */
   function deleteLetter() {
     let row =
       document.getElementsByClassName("letter-row")[

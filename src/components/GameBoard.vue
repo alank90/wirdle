@@ -26,7 +26,13 @@ let wirtleState = reactive({});
 let rightGuessString = ref("");
 let todaysDate = new Date().toDateString();
 
-// Function to intialize wirtleState object & revert VK background colors to grey
+/**
+ * Function to intialize wirtleState object & revert VK background colors to grey
+ * @param {boolean} data Holds state of whether new game has begun
+ *
+ * @returns {undefined}
+ */
+
 const initVars = (data) => {
   const turns = localStorage.getItem("gamesPlayed");
   const lastPlayed = localStorage.getItem("dateLastPlayed");
