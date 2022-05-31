@@ -6,7 +6,7 @@ import animate from "./animate.js";
  *
  * @export
  * @param { object } wirtleState - object containing state of game
- * @param {  string } rightGuessString - The current word for the game
+ * @param { string } rightGuessString - The current word for the game
  */
 export function useKeystrokeHandler(wirtleState, rightGuessString) {
   console.log(rightGuessString.value);
