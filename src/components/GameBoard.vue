@@ -28,14 +28,16 @@ let todaysDate = new Date().toDateString();
 
 /**
  * Function to intialize wirtleState object & revert VK background colors to grey
- * @param {boolean} data Holds state of whether new game has begun
+ * @param {boolean} data - Holds state of whether new game has begun
  *
  * @returns {undefined}
  */
 
 const initVars = (data) => {
+  // Vars
   const turns = localStorage.getItem("gamesPlayed");
   const lastPlayed = localStorage.getItem("dateLastPlayed");
+
   if (turns >= 3 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);

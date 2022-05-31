@@ -60,7 +60,7 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
    * insertLetter - inserts pressed keyboard letter into DOM
    *
    * @param { string } pressedKey
-   * @return {*}
+   * @return {undefined}
    */
   function insertLetter(pressedKey) {
     if (wirtleState.nextLetter === 5) {

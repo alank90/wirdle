@@ -2,12 +2,13 @@ import toastr from "toastr";
 import { WORDS } from "@/components/modules/words.js";
 
 /**
- * Function for adding extra turns for playing wirdle
+ * useEasterEgg - Function for adding extra turns for playing wirdle
  *
  * @export
- * @param {*} wirtleState
- * @param {*} rightGuessString
- * @param {*} Number_Of_Guesses
+ * @param { object } wirtleState - Keeps track of certain App state values
+ * @param { string } rightGuessString
+ * @param { integer } Number_Of_Guesses
+ * @return { undefined }
  */
 
 export default function useEasterEgg(
@@ -26,18 +27,15 @@ export default function useEasterEgg(
   document.addEventListener("keydown", (e) => {
     const key = e.key.toLowerCase();
 
-    console.log(key);
     // We are only interested in Easter egg keys
     if (controlKeysArray.includes(key)) {
       buffer.push(key);
     }
 
     if (controlKeysArray.every(arrayCheck)) {
-      console.log({ buffer });
-      console.log("shift,alt ctrl,@ are all in buffer array");
       localStorage.setItem("gamesPlayed", 2);
 
-      // ========= Reinitialize Gameboard.vue state ============== //
+      // ========= Reinitialize Gameboard.vue Vue state ============== //
       rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
       wirtleState.guessesRemaining = Number_Of_Guesses;
       wirtleState.currentGuess = [];

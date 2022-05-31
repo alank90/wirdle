@@ -99,6 +99,9 @@ const eraseText = () => {
   }
 };
 
+/**
+ * Checks the dateLastPlayed and updates localStorage items if necessary
+ */
 const resetGamesPlayed = () => {
   let todaysDate = new Date().toDateString();
   todaysDate = new Date(todaysDate);

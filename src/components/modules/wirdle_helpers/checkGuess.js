@@ -4,11 +4,11 @@ import toastr from "toastr";
 import animate from "./animate";
 
 /**
- * checkGuess -
+ * checkGuess - Compares two strings and reacts accordingly
  *
  * @export
  * @param { object } wirtleState - Holds state info of wirtle game
- * @param {string } rightGuessString - The correct word
+ * @param { string } rightGuessString - The correct word
  * @return { wirtleState }
  */
 export default function checkGuess(wirtleState, rightGuessString) {
@@ -30,7 +30,20 @@ export default function checkGuess(wirtleState, rightGuessString) {
   }
 
   if (!WORDS.includes(guessString)) {
+    // Clear DOM of guessString
+    let box = null;
+    for (let i = 0; i < row.children.length; i++) {
+      box = row.children[i];
+      box.textContent = "";
+      box.classList.remove("filled-box");
+      box.removeAttribute("style");
+    }
+
+    // Reset state
+    wirtleState.currentGuess = [];
+    wirtleState.nextLetter = 0;
     toastr.error("Sorry. Word is not in list!");
+    return { wirtleState };
   }
 
   for (let i = 0; i < 5; i++) {
@@ -74,7 +87,7 @@ export default function checkGuess(wirtleState, rightGuessString) {
     toastr.success("Alright!!! You guessed correctly. Game over!");
     wirtleState.guessesRemaining = 0;
     wirtleState.newGame = true;
-    return wirtleState;
+    return { wirtleState };
   } else if (wirtleState.guessesRemaining > 1) {
     // Let's reset variables for next guess
     wirtleState.guessesRemaining -= 1;
@@ -91,5 +104,5 @@ export default function checkGuess(wirtleState, rightGuessString) {
       toastr.error("Sorry! Error. Please start again.");
     }
   }
-  return wirtleState;
+  return { wirtleState };
 }
