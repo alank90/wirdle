@@ -3,7 +3,7 @@ import { WORDS } from "@/components/modules/words.js";
 
 /**
  * useEasterEgg - Function for adding extra turns for playing wirdle
- *
+ * @importedby { @/components/GameBoard.vue } GameBoard.vue component
  * @export
  * @param { object } wirtleState - Keeps track of certain App state values
  * @param { string } rightGuessString
@@ -24,7 +24,7 @@ export default function useEasterEgg(
   // checks whether an element is in array
   const arrayCheck = (element) => buffer.includes(element);
 
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", function easterEgg(e) {
     const key = e.key.toLowerCase();
 
     // We are only interested in Easter egg keys
@@ -43,6 +43,7 @@ export default function useEasterEgg(
       wirtleState.pressedKey = "";
       wirtleState.found = "";
       wirtleState.newGame = data;
+      wirtleState.usedEasterEgg = true;
 
       const buttonElems = document.getElementsByClassName("keyboard-button");
       const color = "#d3d6da";
@@ -55,6 +56,8 @@ export default function useEasterEgg(
         "Congratulations!!! You found the Easter egg. You get a bonus game."
       );
       buffer = [];
+
+      document.removeEventListener("keydown", easterEgg);
 
       return;
     }

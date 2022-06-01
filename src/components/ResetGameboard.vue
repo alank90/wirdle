@@ -4,7 +4,6 @@
 
 <script setup>
 import { defineEmits } from "vue";
-import initBoard from "./modules/initializeBoard.js";
 
 // Vars
 const emit = defineEmits(["updateState"]);
@@ -32,9 +31,6 @@ const resetBoard = () => {
   if (storedGamesPlayed % 3 === 0) {
     localStorage.setItem("dateLastPlayed", todaysDate);
   }
-
-  // Then redraw board
-  initBoard(6);
 
   // Finally, emit event "updateState" that is listened for in parent GameBoard component
   emit("updateState", data);

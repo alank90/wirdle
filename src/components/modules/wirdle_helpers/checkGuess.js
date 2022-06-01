@@ -93,12 +93,20 @@ export default function checkGuess(wirtleState, rightGuessString) {
     wirtleState.guessesRemaining -= 1;
     wirtleState.currentGuess = [];
     wirtleState.nextLetter = 0;
+    // Got an extra guess. Need to increment gamesPlayed
+    // This would normally be done in the resetGameboard component
+    if (wirtleState.usedEasterEgg) {
+      localStorage.setItem("gamesPlayed", 3);
+    }
   } else {
     if (wirtleState.guessesRemaining === 1) {
       wirtleState.newGame = true;
       toastr.error(
         "You've run out of guesses. Better luck next time. Game over!"
       );
+      if (wirtleState.usedEasterEgg) {
+        localStorage.setItem("gamesPlayed", 3);
+      }
       toastr.info(`The correct word was: ${rightGuessString}`);
     } else {
       toastr.error("Sorry! Error. Please start again.");

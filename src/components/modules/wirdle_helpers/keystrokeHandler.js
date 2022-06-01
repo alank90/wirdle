@@ -19,7 +19,7 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
    * handleKeystroke - callback function for the "keyup" Event Listener
    * @param {object} wirtleState
    * @param {object} e - event object
-   * @return { wirtleState }
+   * @return { wirtleState } - Game state
    */
   function handleKeystroke(wirtleState, e) {
     // ========== Keyboard event handler ======================= //
@@ -74,12 +74,14 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
         6 - wirtleState.guessesRemaining
       ];
 
-    let box = row.children[wirtleState.nextLetter];
-    animate(box, "pulse");
-    box.textContent = pressedKey;
-    box.classList.add("filled-box");
-    wirtleState.currentGuess.push(pressedKey);
-    wirtleState.nextLetter += 1;
+    if (row) {
+      let box = row.children[wirtleState.nextLetter];
+      animate(box, "pulse");
+      box.textContent = pressedKey;
+      box.classList.add("filled-box");
+      wirtleState.currentGuess.push(pressedKey);
+      wirtleState.nextLetter += 1;
+    }
   }
 
   /**

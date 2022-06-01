@@ -1,10 +1,10 @@
 <template>
-  <div id="game-board"></div>
+  <InitializeBoard :key="forceReRender"></InitializeBoard>
 
   <VirtualKeyboard></VirtualKeyboard>
 
   <ResetGameboard
-    v-show="wirtleState.newGame"
+    v-show="wirtleState.newGame && !wirtleState.usedEasterEgg"
     @updateState="initVars"
   ></ResetGameboard>
 </template>
@@ -12,7 +12,7 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { WORDS } from "@/components/modules/words.js";
-import initBoard from "@/components/modules/initializeBoard.js";
+import InitializeBoard from "@/components/InitializeBoard.vue";
 import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler";
 import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
 import ResetGameboard from "./ResetGameboard.vue";
@@ -25,6 +25,7 @@ const Number_Of_Guesses = 6;
 let wirtleState = reactive({});
 let rightGuessString = ref("");
 let todaysDate = new Date().toDateString();
+let forceReRender = ref(0);
 
 /**
  * Function to intialize wirtleState object & revert VK background colors to grey
@@ -41,13 +42,19 @@ const initVars = (data) => {
   if (turns >= 3 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
-    useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
+    if (!wirtleState.useEasterEgg) {
+      useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
+    }
     toastr.error(
       "You've reached your daily limit for wirdle. Come back tomorrow!"
     );
 
+    // Force <InitializeBoard> to rerender
+    forceReRender.value += 1;
+
     return;
   }
+  
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
   wirtleState.currentGuess = [];
@@ -55,6 +62,7 @@ const initVars = (data) => {
   wirtleState.pressedKey = "";
   wirtleState.found = "";
   wirtleState.newGame = data;
+  wirtleState.usedEasterEgg = false;
 
   const buttonElems = document.getElementsByClassName("keyboard-button");
   const color = "#d3d6da";
@@ -62,11 +70,13 @@ const initVars = (data) => {
   for (const el of buttonElems) {
     el.style.backgroundColor = color;
   }
+
+  // Force <InitializeBoard> to rerender
+  forceReRender.value += 1;
 };
 
 // Initialize Board
 onMounted(() => {
-  initBoard(6);
   initVars(false);
   useKeystrokeHandler(wirtleState, rightGuessString);
 });
