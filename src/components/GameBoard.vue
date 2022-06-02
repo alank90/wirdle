@@ -42,7 +42,7 @@ const initVars = (data) => {
   if (turns >= 3 && lastPlayed === todaysDate) {
     wirtleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
-    if (!wirtleState.useEasterEgg) {
+    if (!wirtleState.usedEasterEgg) {
       useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
     }
     toastr.error(
@@ -55,6 +55,7 @@ const initVars = (data) => {
     return;
   }
   
+  // Executes if we haven't exceeded our # of turns for the day
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
   wirtleState.currentGuess = [];

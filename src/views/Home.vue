@@ -1,30 +1,34 @@
 <template>
-  <Transition>
-    <h1 class="main-title" v-show="!typeWriterEffectVisible">
-      <img
-        v-show="!typeWriterEffectVisible"
-        alt="Wirdle logo"
-        src="../assets/img/wirdle.jpeg"
-      />
-      Wirdle
-    </h1>
-  </Transition>
   <div class="container">
-    <Transition name="fade">
-      <h1 v-show="typeWriterEffectVisible">
+    <Transition>
+      <h1 class="main-title" v-show="!typeWriterEffectVisible">
         <img
-          v-show="typeWriterEffectVisible"
+          v-show="!typeWriterEffectVisible"
           alt="Wirdle logo"
           src="../assets/img/wirdle.jpeg"
         />
-        Wirdle -
-        <span class="typed-text">{{ typeValue }}</span>
-        <span class="blinking-cursor">|</span>
-        <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
+        Wirdle
       </h1>
     </Transition>
+
+    <div class="container-typewriter">
+      <Transition name="fade">
+        <h1 v-show="typeWriterEffectVisible">
+          <img
+            v-show="typeWriterEffectVisible"
+            alt="Wirdle logo"
+            src="../assets/img/wirdle.jpeg"
+          />
+          Wirdle -
+          <span class="typed-text">{{ typeValue }}</span>
+          <span class="blinking-cursor">|</span>
+          <span class="cursor" :class="{ typing: typeStatus }">&nbsp;</span>
+        </h1>
+      </Transition>
+    </div>
+    <GameBoard></GameBoard>
   </div>
-  <GameBoard></GameBoard>
+  <footer>&copy; 2022 by Alan Killian</footer>
 </template>
 
 <script setup>
@@ -119,6 +123,10 @@ const resetGamesPlayed = () => {
 </script>
 
 <style scoped>
+.container {
+  min-height: calc(100vh - 100px);
+}
+
 h1 {
   font-family: var(--playfair);
   font-size: 1.8em;
@@ -128,6 +136,7 @@ h1.main-title {
   font-family: var(--playfair);
   font-size: 2.8em;
   border-bottom: #2c3e50 solid 1.5px;
+  padding-bottom: 20px;
   margin-top: -50px;
   margin-bottom: 20px;
 }
@@ -135,6 +144,10 @@ h1.main-title {
 img[alt="Wirdle logo"] {
   width: 100px;
   margin: 0 5px -20px 2px;
+}
+
+footer {
+  height: 30px;
 }
 
 .v-enter-active,
@@ -158,7 +171,7 @@ img[alt="Wirdle logo"] {
 }
 
 /* ============= Typewriter effects stylings ============ */
-.container {
+.container-typewriter {
   width: auto;
   margin: 0 auto;
   display: flex;

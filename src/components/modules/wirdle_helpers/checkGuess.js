@@ -19,6 +19,15 @@ export default function checkGuess(wirtleState, rightGuessString) {
   let guessString = "";
   let rightGuess = Array.from(rightGuessString);
 
+  // toastr config options
+  toastr.options.closeButton = true;
+  toastr.options.closeMethod = "fadeOut";
+  toastr.options.closeDuration = 350;
+  toastr.options.closeEasing = "swing";
+  toastr.options.showMethod = "slideDown";
+  toastr.options.preventDuplicates = true;
+  toastr.options.progressBar = true;
+
   // Convert to a string from an array
   for (const val of wirtleState.currentGuess) {
     guessString += val;
@@ -101,13 +110,14 @@ export default function checkGuess(wirtleState, rightGuessString) {
   } else {
     if (wirtleState.guessesRemaining === 1) {
       wirtleState.newGame = true;
-      toastr.error(
-        "You've run out of guesses. Better luck next time. Game over!"
-      );
       if (wirtleState.usedEasterEgg) {
         localStorage.setItem("gamesPlayed", 3);
       }
-      toastr.info(`The correct word was: ${rightGuessString}`);
+      toastr.info(
+        `The correct word was: ${rightGuessString}`,
+        "Game Over. Better luck next time.",
+        { timeOut: 5000 }
+      );
     } else {
       toastr.error("Sorry! Error. Please start again.");
     }

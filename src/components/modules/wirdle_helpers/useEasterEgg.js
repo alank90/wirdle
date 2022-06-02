@@ -21,6 +21,15 @@ export default function useEasterEgg(
   const data = false;
   const controlKeysArray = ["shift", "control", "alt", "@"];
 
+  // toastr config options
+  toastr.options.closeButton = true;
+  toastr.options.closeMethod = "fadeOut";
+  toastr.options.closeDuration = 350;
+  toastr.options.closeEasing = "swing";
+  toastr.options.showMethod = "slideDown";
+  toastr.options.preventDuplicates = true;
+  toastr.options.progressBar = true;
+
   // checks whether an element is in array
   const arrayCheck = (element) => buffer.includes(element);
 

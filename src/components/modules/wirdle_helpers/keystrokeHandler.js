@@ -21,8 +21,9 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
    * @param {object} e - event object
    * @return { wirtleState } - Game state
    */
+
+  // ========== Keyboard event handler ======================= //
   function handleKeystroke(wirtleState, e) {
-    // ========== Keyboard event handler ======================= //
     console.log(rightGuessString.value);
 
     if (wirtleState.guessesRemaining === 0) {
