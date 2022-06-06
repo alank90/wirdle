@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "toastr": "^2.1.4",

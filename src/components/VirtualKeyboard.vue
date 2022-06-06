@@ -43,7 +43,7 @@
     * Description - To get your on-screen keyboard functioning, all you have
           to do is dispatch a key up event whenever any key on your 
           on-screen keyboard is clicked.
-    * importedby { @/src/components/GameBoard.vue } - GameBoard.vue 
+    * @importedby { @/src/components/GameBoard.vue } - GameBoard.vue 
     * @param { object } e - the event object
     */
 const clickHandler = (e) => {

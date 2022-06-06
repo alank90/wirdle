@@ -51,19 +51,22 @@ let displayTextArrayIndex = 0;
 let charIndex = 0;
 let typeWriterEffectVisible = ref(true);
 let typeWriterEffectRunning = true;
+const eventType = ["keydown", "click"];
 
 onMounted(() => {
   setTimeout(typeText, newTextDelay + 200);
   resetGamesPlayed();
 
   // Add event listener to toggle type writer effect
-  document.addEventListener(
-    "keydown",
-    () => {
-      typeWriterEffectRunning = false;
-      typeWriterEffectVisible.value = false;
-    },
-    { once: true }
+  eventType.forEach((type) =>
+    document.addEventListener(
+      type,
+      () => {
+        typeWriterEffectRunning = false;
+        typeWriterEffectVisible.value = false;
+      },
+      { once: true }
+    )
   );
 });
 
@@ -127,7 +130,7 @@ const resetGamesPlayed = () => {
   min-height: calc(100vh - 100px);
 }
 
-h1 {
+h1:not(.main-title) {
   font-family: var(--playfair);
   font-size: 1.8em;
 }
@@ -142,6 +145,7 @@ h1.main-title {
 }
 
 img[alt="Wirdle logo"] {
+  float: left;
   width: 100px;
   margin: 0 5px -20px 2px;
 }

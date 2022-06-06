@@ -9,8 +9,6 @@ import animate from "./animate.js";
  * @param { string } rightGuessString - The current word for the game
  */
 export function useKeystrokeHandler(wirtleState, rightGuessString) {
-  console.log(rightGuessString.value);
-
   if (!wirtleState.newGame) {
     document.addEventListener("keyup", handleKeystroke.bind(null, wirtleState));
   }
@@ -24,8 +22,6 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
 
   // ========== Keyboard event handler ======================= //
   function handleKeystroke(wirtleState, e) {
-    console.log(rightGuessString.value);
-
     if (wirtleState.guessesRemaining === 0) {
       return { wirtleState };
     }

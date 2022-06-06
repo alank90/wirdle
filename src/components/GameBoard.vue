@@ -54,7 +54,7 @@ const initVars = (data) => {
 
     return;
   }
-  
+
   // Executes if we haven't exceeded our # of turns for the day
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
   wirtleState.guessesRemaining = Number_Of_Guesses;
@@ -64,6 +64,7 @@ const initVars = (data) => {
   wirtleState.found = "";
   wirtleState.newGame = data;
   wirtleState.usedEasterEgg = false;
+  localStorage.setItem("todays_word", rightGuessString.value);
 
   const buttonElems = document.getElementsByClassName("keyboard-button");
   const color = "#d3d6da";
