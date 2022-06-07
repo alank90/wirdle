@@ -22,6 +22,11 @@ _Note- Remember to add node_modules/ directory to .gitignore file befor the comm
  
  _$ git push -u_ from command line.
 
+ ### ========== Amend last Git commit ================= ###
+**\$ (some_branch) git commit --amend --no-edit**
+### ==== Edit last commit message only ==== ###
+**\$ (some_branch) git commit --amend -m "Your new commit message"**
+
 ## ===== Add existing remote branch to a local repo and track branch: =====
 
 **\$ git fetch**
