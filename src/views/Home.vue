@@ -140,8 +140,8 @@ h1.main-title {
   font-size: 2.8em;
   border-bottom: #2c3e50 solid 1.5px;
   padding-bottom: 20px;
-  margin-top: -50px;
-  margin-bottom: 20px;
+  margin: -50px auto -20px;
+  max-width: 300px;
 }
 
 img[alt="Wirdle logo"] {
