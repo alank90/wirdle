@@ -7,7 +7,7 @@
           alt="Wirdle logo"
           src="../assets/img/wirdle.jpeg"
         />
-        Wirdle
+        Wirtle
       </h1>
     </Transition>
 
@@ -152,6 +152,7 @@ img[alt="Wirdle logo"] {
 
 footer {
   height: 30px;
+  margin-top: 4px;
 }
 
 .v-enter-active,

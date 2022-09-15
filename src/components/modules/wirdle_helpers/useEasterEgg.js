@@ -19,7 +19,7 @@ export default function useEasterEgg(
   // Vars
   let buffer = [];
   const data = false;
-  const controlKeysArray = ["shift", "control", "alt", "@"];
+  const easterEggKeyCombo = ["shift", "control", "alt", "@"];
 
   // toastr config options
   toastr.options.closeButton = true;
@@ -37,11 +37,11 @@ export default function useEasterEgg(
     const key = e.key.toLowerCase();
 
     // We are only interested in Easter egg keys
-    if (controlKeysArray.includes(key)) {
+    if (easterEggKeyCombo.includes(key)) {
       buffer.push(key);
     }
 
-    if (controlKeysArray.every(arrayCheck)) {
+    if (easterEggKeyCombo.every(arrayCheck)) {
       localStorage.setItem("gamesPlayed", 2);
 
       // ========= Reinitialize Gameboard.vue Vue state ============== //

@@ -79,6 +79,7 @@ const clickHandler = (e) => {
 
 #keyboard-cont div {
   display: flex;
+  flex-wrap: nowrap;
 }
 
 .second-row {
@@ -86,7 +87,10 @@ const clickHandler = (e) => {
 }
 
 .keyboard-button {
-  font-size: 1rem;
+  flex: 0 0 35px;
+  text-align: center;
+  border: 1px solid black;
+  font-size: 1.5rem;
   font-weight: 700;
   padding: 0.5rem;
   margin: 0 2px;
