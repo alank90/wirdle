@@ -7,7 +7,7 @@
           alt="Wirdle logo"
           src="../assets/img/wirdle.jpeg"
         />
-        Wirtle
+        Wirdle
       </h1>
     </Transition>
 
