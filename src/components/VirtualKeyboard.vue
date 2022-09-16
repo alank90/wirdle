@@ -3,12 +3,12 @@
     <div class="first-row">
       <button class="keyboard-button">q</button
       ><button class="keyboard-button">w</button
-      ><button class="keyboard-button">e</button
+      ><button class="keyboard-button thin-letter">e</button
       ><button class="keyboard-button">r</button
       ><button class="keyboard-button">t</button
       ><button class="keyboard-button">y</button
       ><button class="keyboard-button">u</button
-      ><button class="keyboard-button">i</button
+      ><button class="keyboard-button thin-letter">i</button
       ><button class="keyboard-button">o</button
       ><button class="keyboard-button">p</button>
     </div>
@@ -19,7 +19,7 @@
       ><button class="keyboard-button">f</button
       ><button class="keyboard-button">g</button
       ><button class="keyboard-button">h</button
-      ><button class="keyboard-button">j</button
+      ><button class="keyboard-button thin-letter">j</button
       ><button class="keyboard-button">k</button
       ><button class="keyboard-button">l</button>
     </div>
@@ -29,7 +29,7 @@
       ><button class="keyboard-button">x</button
       ><button class="keyboard-button">c</button
       ><button class="keyboard-button">v</button
-      ><button class="keyboard-button">b</button
+      ><button class="keyboard-button thin-letter">b</button
       ><button class="keyboard-button">n</button
       ><button class="keyboard-button">m</button
       ><button class="keyboard-button">
@@ -87,7 +87,6 @@ const clickHandler = (e) => {
 }
 
 .keyboard-button {
-  flex: 0 0 35px;
   text-align: center;
   border: 1px solid black;
   font-size: 1.5rem;
@@ -98,5 +97,9 @@ const clickHandler = (e) => {
   border-radius: 4px;
   text-transform: uppercase;
   user-select: none;
+}
+
+.thin-letter {
+  flex: 0 0 40px; /* This enlarges small letters on VK ie, I,G etc */
 }
 </style>
