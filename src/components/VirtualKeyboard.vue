@@ -1,6 +1,6 @@
 <template>
   <div id="keyboard-cont" @click="clickHandler">
-    <div class="first-row">
+    <div class="row">
       <button class="keyboard-button">q</button
       ><button class="keyboard-button">w</button
       ><button class="keyboard-button thin-letter">e</button
@@ -12,7 +12,7 @@
       ><button class="keyboard-button">o</button
       ><button class="keyboard-button">p</button>
     </div>
-    <div class="second-row">
+    <div class="row">
       <button class="keyboard-button">a</button
       ><button class="keyboard-button">s</button
       ><button class="keyboard-button">d</button
@@ -23,7 +23,7 @@
       ><button class="keyboard-button">k</button
       ><button class="keyboard-button">l</button>
     </div>
-    <div class="third-row">
+    <div class="row">
       <button class="keyboard-button">Enter</button
       ><button class="keyboard-button">z</button
       ><button class="keyboard-button">x</button
@@ -71,32 +71,32 @@ const clickHandler = (e) => {
 
 <style scoped>
 #keyboard-cont {
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: auto;
+  margin: 0 8px;
 }
 
-#keyboard-cont div {
+#keyboard-cont .row {
   display: flex;
-  flex-wrap: nowrap;
-}
-
-.second-row {
-  margin: 0.5rem 0;
+  width: 100%;
+  margin: 8px auto 8px;
+  justify-content: center;
+  touch-action: manipulation;
 }
 
 .keyboard-button {
   text-align: center;
   border: 1px solid black;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  padding: 0.5rem;
-  margin: 0 2px;
+  padding: 0.6rem;
+  margin: 0 6px 0 0;
   cursor: pointer;
   border-radius: 4px;
   text-transform: uppercase;
   user-select: none;
+}
+.keyboard-button:last-of-type {
+  margin: 0;
 }
 
 .thin-letter {
