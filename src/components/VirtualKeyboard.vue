@@ -85,7 +85,7 @@ const clickHandler = (e) => {
 
 .keyboard-button {
   text-align: center;
-  border: 1px solid black;
+  border: 0.3px solid #d5d8dc;
   font-size: 0.9rem;
   font-weight: 700;
   padding: 0.6rem;
