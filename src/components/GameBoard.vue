@@ -4,7 +4,7 @@
   <VirtualKeyboard></VirtualKeyboard>
 
   <ResetGameboard
-    v-show="wirtleState.newGame && !wirtleState.usedEasterEgg"
+    v-show="wirdleState.newGame && !wirdleState.usedEasterEgg"
     @updateState="initVars"
   ></ResetGameboard>
 </template>
@@ -22,13 +22,13 @@ import useEasterEgg from "@/components/modules/wirdle_helpers/useEasterEgg.js";
 
 // Initialize Vars
 const Number_Of_Guesses = 6;
-let wirtleState = reactive({});
+let wirdleState = reactive({});
 let rightGuessString = ref("");
 let todaysDate = new Date().toDateString();
 let forceReRender = ref(0);
 
 /**
- * Function to intialize wirtleState object & revert VK background colors to grey
+ * Function to intialize wirdleState object & revert VK background colors to grey
  * @param {boolean} data - Holds state of whether new game has begun
  *
  * @returns {undefined}
@@ -40,10 +40,10 @@ const initVars = (data) => {
   const lastPlayed = localStorage.getItem("dateLastPlayed");
 
   if (turns >= 3 && lastPlayed === todaysDate) {
-    wirtleState.newGame = false;
+    wirdleState.newGame = false;
     localStorage.setItem("dateLastPlayed", todaysDate);
-    if (!wirtleState.usedEasterEgg) {
-      useEasterEgg(wirtleState, rightGuessString, Number_Of_Guesses);
+    if (!wirdleState.usedEasterEgg) {
+      useEasterEgg(wirdleState, rightGuessString, Number_Of_Guesses);
     }
     toastr.error(
       "You've reached your daily limit for wirdle. Come back tomorrow!"
@@ -57,13 +57,13 @@ const initVars = (data) => {
 
   // Executes if we haven't exceeded our # of turns for the day
   rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
-  wirtleState.guessesRemaining = Number_Of_Guesses;
-  wirtleState.currentGuess = [];
-  wirtleState.nextLetter = 0;
-  wirtleState.pressedKey = "";
-  wirtleState.found = "";
-  wirtleState.newGame = data;
-  wirtleState.usedEasterEgg = false;
+  wirdleState.guessesRemaining = Number_Of_Guesses;
+  wirdleState.currentGuess = [];
+  wirdleState.nextLetter = 0;
+  wirdleState.pressedKey = "";
+  wirdleState.found = "";
+  wirdleState.newGame = data;
+  wirdleState.usedEasterEgg = false;
   localStorage.setItem("todays_word", rightGuessString.value);
 
   const buttonElems = document.getElementsByClassName("keyboard-button");
@@ -80,7 +80,7 @@ const initVars = (data) => {
 // Initialize Board
 onMounted(() => {
   initVars(false);
-  useKeystrokeHandler(wirtleState, rightGuessString);
+  useKeystrokeHandler(wirdleState, rightGuessString);
 });
 </script>
 

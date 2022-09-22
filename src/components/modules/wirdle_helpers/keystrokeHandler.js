@@ -5,48 +5,48 @@ import animate from "./animate.js";
  * useKeystrokeHandler - Vue Composable
  *
  * @export
- * @param { object } wirtleState - object containing state of game
+ * @param { object } wirdleState - object containing state of game
  * @param { string } rightGuessString - The current word for the game
  */
-export function useKeystrokeHandler(wirtleState, rightGuessString) {
-  if (!wirtleState.newGame) {
-    document.addEventListener("keyup", handleKeystroke.bind(null, wirtleState));
+export function useKeystrokeHandler(wirdleState, rightGuessString) {
+  if (!wirdleState.newGame) {
+    document.addEventListener("keyup", handleKeystroke.bind(null, wirdleState));
   }
 
   /**
    * handleKeystroke - callback function for the "keyup" Event Listener
-   * @param {object} wirtleState
+   * @param {object} wirdleState
    * @param {object} e - event object
-   * @return { wirtleState } - Game state
+   * @return { wirdleState } - Game state
    */
 
   // ========== Keyboard event handler ======================= //
-  function handleKeystroke(wirtleState, e) {
-    if (wirtleState.guessesRemaining === 0) {
-      return { wirtleState };
+  function handleKeystroke(wirdleState, e) {
+    if (wirdleState.guessesRemaining === 0) {
+      return { wirdleState };
     }
 
-    wirtleState.pressedKey = String(e.key);
+    wirdleState.pressedKey = String(e.key);
 
     if (
-      wirtleState.pressedKey === "Backspace" &&
-      wirtleState.nextLetter !== 0
+      wirdleState.pressedKey === "Backspace" &&
+      wirdleState.nextLetter !== 0
     ) {
       deleteLetter();
-      return { wirtleState };
+      return { wirdleState };
     }
 
-    if (wirtleState.pressedKey === "Enter") {
-      wirtleState = checkGuess(wirtleState, rightGuessString.value) || {};
-      return { wirtleState };
+    if (wirdleState.pressedKey === "Enter") {
+      wirdleState = checkGuess(wirdleState, rightGuessString.value) || {};
+      return { wirdleState };
     }
 
-    wirtleState.found = wirtleState.pressedKey.match(/[a-z]/gi);
-    if (!wirtleState.found || wirtleState.found.length > 1) {
-      return { wirtleState };
+    wirdleState.found = wirdleState.pressedKey.match(/[a-z]/gi);
+    if (!wirdleState.found || wirdleState.found.length > 1) {
+      return { wirdleState };
     } else {
-      insertLetter(wirtleState.pressedKey);
-      return { wirtleState };
+      insertLetter(wirdleState.pressedKey);
+      return { wirdleState };
     }
   } // end handleKeystroke
 
@@ -60,7 +60,7 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
    * @return {undefined}
    */
   function insertLetter(pressedKey) {
-    if (wirtleState.nextLetter === 5) {
+    if (wirdleState.nextLetter === 5) {
       return;
     }
 
@@ -68,16 +68,16 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
 
     let row =
       document.getElementsByClassName("letter-row")[
-        6 - wirtleState.guessesRemaining
+        6 - wirdleState.guessesRemaining
       ];
 
     if (row) {
-      let box = row.children[wirtleState.nextLetter];
+      let box = row.children[wirdleState.nextLetter];
       animate(box, "pulse");
       box.textContent = pressedKey;
       box.classList.add("filled-box");
-      wirtleState.currentGuess.push(pressedKey);
-      wirtleState.nextLetter += 1;
+      wirdleState.currentGuess.push(pressedKey);
+      wirdleState.nextLetter += 1;
     }
   }
 
@@ -88,13 +88,13 @@ export function useKeystrokeHandler(wirtleState, rightGuessString) {
   function deleteLetter() {
     let row =
       document.getElementsByClassName("letter-row")[
-        6 - wirtleState.guessesRemaining
+        6 - wirdleState.guessesRemaining
       ];
-    let box = row.children[wirtleState.nextLetter - 1];
+    let box = row.children[wirdleState.nextLetter - 1];
     box.textContent = "";
     box.classList.remove("filled-box");
-    wirtleState.currentGuess.pop();
-    wirtleState.nextLetter -= 1;
+    wirdleState.currentGuess.pop();
+    wirdleState.nextLetter -= 1;
   }
 }
 // ========================================================== //

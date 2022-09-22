@@ -5,14 +5,14 @@ import { WORDS } from "@/components/modules/words.js";
  * useEasterEgg - Function for adding extra turns for playing wirdle
  * @importedby { @/components/GameBoard.vue } GameBoard.vue component
  * @export
- * @param { object } wirtleState - Keeps track of certain App state values
+ * @param { object } wirdleState - Keeps track of certain App state values
  * @param { string } rightGuessString
  * @param { integer } Number_Of_Guesses
  * @return { undefined }
  */
 
 export default function useEasterEgg(
-  wirtleState,
+  wirdleState,
   rightGuessString,
   Number_Of_Guesses
 ) {
@@ -46,13 +46,13 @@ export default function useEasterEgg(
 
       // ========= Reinitialize Gameboard.vue Vue state ============== //
       rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
-      wirtleState.guessesRemaining = Number_Of_Guesses;
-      wirtleState.currentGuess = [];
-      wirtleState.nextLetter = 0;
-      wirtleState.pressedKey = "";
-      wirtleState.found = "";
-      wirtleState.newGame = data;
-      wirtleState.usedEasterEgg = true;
+      wirdleState.guessesRemaining = Number_Of_Guesses;
+      wirdleState.currentGuess = [];
+      wirdleState.nextLetter = 0;
+      wirdleState.pressedKey = "";
+      wirdleState.found = "";
+      wirdleState.newGame = data;
+      wirdleState.usedEasterEgg = true;
 
       const buttonElems = document.getElementsByClassName("keyboard-button");
       const color = "#d3d6da";

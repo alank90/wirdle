@@ -127,6 +127,8 @@ const resetGamesPlayed = () => {
 
 <style scoped>
 .container {
+  max-width: 1024px;
+  margin: 0 auto;
   min-height: calc(100vh - 100px);
 }
 

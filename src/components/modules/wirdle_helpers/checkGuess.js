@@ -7,17 +7,25 @@ import animate from "./animate";
  * checkGuess - Compares two strings and reacts accordingly
  *
  * @export
- * @param { object } wirtleState - Holds state info of wirtle game
+ * @param { object } wirdleState - Holds state info of wirdle game
  * @param { string } rightGuessString - The correct word
- * @return { wirtleState }
+ * @return { wirdleState }
  */
-export default function checkGuess(wirtleState, rightGuessString) {
+export default function checkGuess(wirdleState, rightGuessString) {
   let row =
     document.getElementsByClassName("letter-row")[
-      6 - wirtleState.guessesRemaining
+      6 - wirdleState.guessesRemaining
     ];
   let guessString = "";
   let rightGuess = Array.from(rightGuessString);
+  const endGameMessage = [
+    "Whoa! Just made it.",
+    "Cutting it a little close.",
+    "Not bad.",
+    "Very Impressive.",
+    "Excellent. You must do this alot.",
+    "Wow! Your're a genius.",
+  ];
 
   // toastr config options
   toastr.options.closeButton = true;
@@ -29,7 +37,7 @@ export default function checkGuess(wirtleState, rightGuessString) {
   toastr.options.progressBar = true;
 
   // Convert to a string from an array
-  for (const val of wirtleState.currentGuess) {
+  for (const val of wirdleState.currentGuess) {
     guessString += val;
   }
 
@@ -49,16 +57,16 @@ export default function checkGuess(wirtleState, rightGuessString) {
     }
 
     // Reset state
-    wirtleState.currentGuess = [];
-    wirtleState.nextLetter = 0;
+    wirdleState.currentGuess = [];
+    wirdleState.nextLetter = 0;
     toastr.error("Sorry. Word is not in list!");
-    return { wirtleState };
+    return { wirdleState };
   }
 
   for (let i = 0; i < 5; i++) {
     let letterColor = "";
     let box = row.children[i];
-    let letter = wirtleState.currentGuess[i];
+    let letter = wirdleState.currentGuess[i];
 
     // Check if the letter is in the correctGuess array
     let letterPosition = rightGuess.indexOf(letter);
@@ -93,24 +101,25 @@ export default function checkGuess(wirtleState, rightGuessString) {
   } // end for ... loop
 
   if (guessString === rightGuessString) {
-    toastr.success("Alright!!! You guessed correctly. Game over!");
-    wirtleState.guessesRemaining = 0;
-    wirtleState.newGame = true;
-    return { wirtleState };
-  } else if (wirtleState.guessesRemaining > 1) {
+    console.log(wirdleState.guessesRemaining);
+    toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
+    wirdleState.guessesRemaining = 0;
+    wirdleState.newGame = true;
+    return { wirdleState };
+  } else if (wirdleState.guessesRemaining > 1) {
     // Let's reset variables for next guess
-    wirtleState.guessesRemaining -= 1;
-    wirtleState.currentGuess = [];
-    wirtleState.nextLetter = 0;
+    wirdleState.guessesRemaining -= 1;
+    wirdleState.currentGuess = [];
+    wirdleState.nextLetter = 0;
     // Got an extra guess. Need to increment gamesPlayed
     // This would normally be done in the resetGameboard component
-    if (wirtleState.usedEasterEgg) {
+    if (wirdleState.usedEasterEgg) {
       localStorage.setItem("gamesPlayed", 3);
     }
   } else {
-    if (wirtleState.guessesRemaining === 1) {
-      wirtleState.newGame = true;
-      if (wirtleState.usedEasterEgg) {
+    if (wirdleState.guessesRemaining === 1) {
+      wirdleState.newGame = true;
+      if (wirdleState.usedEasterEgg) {
         localStorage.setItem("gamesPlayed", 3);
       }
       toastr.info(
@@ -122,5 +131,5 @@ export default function checkGuess(wirtleState, rightGuessString) {
       toastr.error("Sorry! Error. Please start again.");
     }
   }
-  return { wirtleState };
+  return { wirdleState };
 }
