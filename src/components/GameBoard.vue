@@ -1,5 +1,7 @@
 <template>
-  <InitializeBoard :key="forceReRender"></InitializeBoard>
+  <InitializeBoard :key="forceReRender" />
+
+  <GameHint :propsRightGuessString="rightGuessString" />
 
   <VirtualKeyboard></VirtualKeyboard>
 
@@ -16,6 +18,7 @@ import InitializeBoard from "@/components/InitializeBoard.vue";
 import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler";
 import VirtualKeyboard from "@/components/VirtualKeyboard.vue";
 import ResetGameboard from "./ResetGameboard.vue";
+import GameHint from "./GameHint.vue";
 import toastr from "toastr";
 import "@/assets/css/gameBoard.css";
 import useEasterEgg from "@/components/modules/wirdle_helpers/useEasterEgg.js";
