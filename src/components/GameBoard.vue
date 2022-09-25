@@ -1,7 +1,10 @@
 <template>
-  <InitializeBoard :key="forceReRender" />
+  <GameHint
+    :propRightGuessString="rightGuessString"
+    :propGuessesRemaining="wirdleState.guessesRemaining"
+  />
 
-  <GameHint :propsRightGuessString="rightGuessString" />
+  <InitializeBoard :key="forceReRender" />
 
   <VirtualKeyboard></VirtualKeyboard>
 
