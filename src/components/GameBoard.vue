@@ -1,5 +1,6 @@
 <template>
   <GameHint
+    v-if="showHint"
     :propRightGuessString="rightGuessString"
     :propGuessesRemaining="wirdleState.guessesRemaining"
   />
@@ -15,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { WORDS } from "@/components/modules/words.js";
 import InitializeBoard from "@/components/InitializeBoard.vue";
 import { useKeystrokeHandler } from "./modules/wirdle_helpers/keystrokeHandler";
@@ -32,6 +33,16 @@ let wirdleState = reactive({});
 let rightGuessString = ref("");
 let todaysDate = new Date().toDateString();
 let forceReRender = ref(0);
+let showHint = ref(false);
+
+watch(
+  wirdleState,
+  (newState) => {
+    if (newState.guessesRemaining < 5) {
+      showHint = true;
+    }
+  }
+);
 
 /**
  * Function to intialize wirdleState object & revert VK background colors to grey
