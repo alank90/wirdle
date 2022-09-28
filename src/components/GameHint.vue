@@ -1,14 +1,19 @@
 <template>
-  <button @click="hint">Hint</button>
+  <p>Would you like a hint?</p>
+  <button @click="hint">Yes</button><button>No</button>
 </template>
 
 <script setup>
 import toastr from "toastr";
+import { getCurrentInstance } from "vue";
 
 const props = defineProps({
   propRightGuessString: String,
   propGuessesRemaining: Number,
 });
+
+const instance = getCurrentInstance();
+console.log(instance.parent.refs);
 
 /**
  * hint - Function to generate a wordle hint on click
@@ -30,6 +35,7 @@ function hint() {
   let lastBoardRowIndex = null;
   let checkHint = true;
   let i = 0;
+
   // generate a random number 0-4
   index = randomNumber();
 

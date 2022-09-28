@@ -1,9 +1,11 @@
 <template>
-  <GameHint
-    v-if="showHint"
-    :propRightGuessString="rightGuessString"
-    :propGuessesRemaining="wirdleState.guessesRemaining"
-  />
+  <Transition>
+    <GameHint
+      v-if="showHint"
+      :propRightGuessString="rightGuessString"
+      :propGuessesRemaining="wirdleState.guessesRemaining"
+    />
+  </Transition>
 
   <InitializeBoard :key="forceReRender" />
 
@@ -35,11 +37,12 @@ let todaysDate = new Date().toDateString();
 let forceReRender = ref(0);
 let showHint = ref(false);
 
+// This watcher will display hint button
 watch(
-  wirdleState,
-  (newState) => {
-    if (newState.guessesRemaining < 5) {
-      showHint = true;
+  () => wirdleState.guessesRemaining,
+  () => {
+    if (wirdleState.guessesRemaining < 5) {
+      showHint.value = true;
     }
   }
 );
@@ -104,5 +107,15 @@ onMounted(() => {
 <style scoped>
 div {
   font-family: var(--nanum);
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
