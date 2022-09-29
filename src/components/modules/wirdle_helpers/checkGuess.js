@@ -101,7 +101,6 @@ export default function checkGuess(wirdleState, rightGuessString) {
   } // end for ... loop
 
   if (guessString === rightGuessString) {
-    console.log(wirdleState.guessesRemaining);
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
     wirdleState.guessesRemaining = 0;
     wirdleState.newGame = true;

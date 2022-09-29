@@ -1,19 +1,30 @@
 <template>
-  <p>Would you like a hint?</p>
-  <button @click="hint">Yes</button><button>No</button>
+  <div v-if="showHint" class="dialog-box" ref="dialogBox">
+    <p>Would you like a hint?</p>
+    <button @click="hint">Yes</button
+    ><button @click="showHint = false">No</button>
+  </div>
 </template>
 
 <script setup>
 import toastr from "toastr";
-import { getCurrentInstance } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   propRightGuessString: String,
   propGuessesRemaining: Number,
 });
+let showHint = ref(false);
 
-const instance = getCurrentInstance();
-console.log(instance.parent.refs);
+// This watcher will display hint button
+watch(
+  () => props.propGuessesRemaining,
+  () => {
+    if (props.propGuessesRemaining < 3) {
+      showHint.value = true;
+    }
+  }
+);
 
 /**
  * hint - Function to generate a wordle hint on click
@@ -36,6 +47,8 @@ function hint() {
   let checkHint = true;
   let i = 0;
 
+  // Dissolve hint dialog
+  showHint.value = false;
   // generate a random number 0-4
   index = randomNumber();
 
@@ -58,22 +71,10 @@ function hint() {
     // random index and start again with a new wirdle letter. Loop continues until
     // if condition is met or we reach 10 tries.
 
-    console.log(`Loop ======> ${i}`);
-    console.log(`The letter position we are checking is ${index + 1}`);
-    console.log(
-      `The guessed Letter is: ${rowLetters[index + 1].innerHTML.toUpperCase()}`
-    );
-    console.log(`The wirdle letter is ${wirdleLetter.toUpperCase()}`);
-
     if (
       rowLetters[index + 1].innerHTML.toUpperCase() !==
       wirdleLetter.toUpperCase()
     ) {
-      console.log(
-        `The hint is: the letter ${wirdleLetter.toUpperCase()} is in position ${
-          index + 1
-        }`
-      );
       // Reveal a hint
       toastr["info"](
         `The letter ${wirdleLetter.toUpperCase()} is in position ${index + 1}`,
@@ -111,8 +112,44 @@ function randomNumber() {
 </script>
 
 <style scoped>
+/* CSS */
+.dialog-box {
+  position: absolute;
+  opacity: 0.8;
+  width: 250px;
+  height: 100px;
+  font-weight: 700;
+  background-color: aliceblue;
+  transition: opacity 0.5s;
+  /* Position div in center */
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dialog-box:hover {
+  opacity: 0.9;
+}
+
+p {
+  margin-top: 8px;
+}
+
 button {
-  font-size: 24px;
-  font-weight: 600;
+  background-image: linear-gradient(#0dccea, #58aac2);
+  border: 0;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
+  margin: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 </style>
