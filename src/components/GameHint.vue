@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showHint" class="dialog-box" ref="dialogBox">
+  <div v-if="showHint" class="dialog-box">
     <p>Would you like a hint?</p>
     <button @click="hint">Yes</button
     ><button @click="showHint = false">No</button>
@@ -20,7 +20,7 @@ let showHint = ref(false);
 watch(
   () => props.propGuessesRemaining,
   () => {
-    if (props.propGuessesRemaining < 3) {
+    if (props.propGuessesRemaining < 3 && props.propGuessesRemaining > 0) {
       showHint.value = true;
     }
   }

@@ -95,6 +95,9 @@ const clickHandler = (e) => {
   text-transform: uppercase;
   user-select: none;
 }
+.keyboard-button:hover {
+  box-shadow: 1px 1px 3px 0px #000;
+}
 .keyboard-button:last-of-type {
   margin: 0;
 }
