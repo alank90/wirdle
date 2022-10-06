@@ -6,9 +6,9 @@ import animate from "./animate";
 /**
  * checkGuess - Compares two strings and reacts accordingly
  *
- * @export
  * @param { object } wirdleState - Holds state info of wirdle game
  * @param { string } rightGuessString - The correct word
+ * @imported by keystrokeHandler.js
  * @return { wirdleState }
  */
 export default function checkGuess(wirdleState, rightGuessString) {
@@ -75,7 +75,7 @@ export default function checkGuess(wirdleState, rightGuessString) {
     if (letterPosition === -1) {
       letterColor = "grey";
     } else {
-      // now, letter is definitely in word
+      // now, letter is definitely in word so,
       // if letter index and right guess index are the same
       // letter is in the right position
       if (letter === rightGuess[i]) {
