@@ -68,7 +68,7 @@ export default function checkGuess(wirdleState, rightGuessString) {
     let box = row.children[i];
     let letter = wirdleState.currentGuess[i];
 
-    // Check if the letter is in the correctGuess array
+    // Check if the letter is in the rightGuess array
     let letterPosition = rightGuess.indexOf(letter);
 
     // Now determine what color to assign to background of letter box
