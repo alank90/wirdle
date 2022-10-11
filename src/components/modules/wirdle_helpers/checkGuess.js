@@ -61,7 +61,7 @@ export default function checkGuess(wirdleState, rightGuessString) {
     wirdleState.nextLetter = 0;
     toastr.error("Sorry. Word is not in list!");
     return { wirdleState };
-  }
+  } // End if
 
   for (let i = 0; i < 5; i++) {
     let letterColor = "";
@@ -70,10 +70,20 @@ export default function checkGuess(wirdleState, rightGuessString) {
 
     // Check if the letter is in the rightGuess array
     let letterPosition = rightGuess.indexOf(letter);
-
+    // Check how many times letter appears in the rightGuess string
+    const regex = new RegExp(letter, "g");
+    const letterMatchesInWord = guessString.match(regex).length;
+    console.log(letterMatchesInWord);
     // Now determine what color to assign to background of letter box
     if (letterPosition === -1) {
       letterColor = "grey";
+    } else if (letterMatchesInWord > 1) {
+      console.log("Im in letter that appears more then once");
+      // Loop thru the rightGuess Array
+      while (letterMatchesInWord) {
+        console.log("test");
+        letterMatchesInWord - 1;
+      }
     } else {
       // now, letter is definitely in word so,
       // if letter index and right guess index are the same
