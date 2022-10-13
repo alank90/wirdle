@@ -77,15 +77,15 @@ export default function checkGuess(wirdleState, rightGuessString) {
     // Now determine what color to assign to background of letter box
     if (letterPosition === -1) {
       letterColor = "grey";
-    } else if (currentLetterMatchesInWirdle > 1) {
+    } /* else if (currentLetterMatchesInWirdle > 1) {
       console.log("Im in letter that appears more then once");
       // Loop thru the rightGuess Array
       while (currentLetterMatchesInWirdle) {
         console.log("test");
 
         currentLetterMatchesInWirdle - 1;
-      }
-    } else {
+      } 
+    } */ else {
       // now, letter is definitely in word so,
       // if letter index and right guess index are the same
       // letter is in the right position
