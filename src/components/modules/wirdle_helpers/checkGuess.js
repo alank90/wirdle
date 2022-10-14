@@ -7,17 +7,17 @@ import animate from "./animate";
  * checkGuess - Compares two strings and reacts accordingly
  *
  * @param { object } wirdleState - Holds state info of wirdle game
- * @param { string } rightGuessString - The correct word
+ * @param { string } wirdle - The correct word
  * @imported by keystrokeHandler.js
  * @return { wirdleState }
  */
-export default function checkGuess(wirdleState, rightGuessString) {
+export default function checkGuess(wirdleState, wirdle) {
   let row =
     document.getElementsByClassName("letter-row")[
       6 - wirdleState.guessesRemaining
     ];
   let guessString = "";
-  let rightGuess = Array.from(rightGuessString);
+  wirdle = Array.from(wirdle);
   const endGameMessage = [
     "Whoa! Just made it.",
     "Cutting it a little close.",
@@ -64,22 +64,23 @@ export default function checkGuess(wirdleState, rightGuessString) {
   } // End if
 
   for (let i = 0; i < 5; i++) {
-    let letterColor = "";
+    let currentBoxBGColor = "";
     let box = row.children[i];
     let letter = wirdleState.currentGuess[i];
 
-    // Check if the letter is in the rightGuess array
-    let letterPosition = rightGuess.indexOf(letter);
-    // Check how many times letter appears in the rightGuess string
+    // Check if the letter is in the wirdle array
+    let guessedLetterPositionInWirdle = wirdle.indexOf(letter);
+    // Check how many times letter appears in the wirdle string
     const regex = new RegExp(letter, "g");
+    // How many times does current guessed letter appear in wirdle
     const currentLetterMatchesInWirdle = guessString.match(regex).length;
     console.log(currentLetterMatchesInWirdle);
     // Now determine what color to assign to background of letter box
-    if (letterPosition === -1) {
-      letterColor = "grey";
+    if (guessedLetterPositionInWirdle === -1) {
+      currentBoxBGColor = "grey";
     } /* else if (currentLetterMatchesInWirdle > 1) {
       console.log("Im in letter that appears more then once");
-      // Loop thru the rightGuess Array
+      // Loop thru the wirdle Array
       while (currentLetterMatchesInWirdle) {
         console.log("test");
 
@@ -89,15 +90,15 @@ export default function checkGuess(wirdleState, rightGuessString) {
       // now, letter is definitely in word so,
       // if letter index and right guess index are the same
       // letter is in the right position
-      if (letter === rightGuess[i]) {
+      if (letter === wirdle[i]) {
         // shade box green
-        letterColor = "green";
+        currentBoxBGColor = "green";
       } else {
         // shade box yellow
-        letterColor = "yellow";
+        currentBoxBGColor = "yellow";
       }
       // Mark the wirdle position as done
-      rightGuess[letterPosition] = "#";
+      wirdle[guessedLetterPositionInWirdle] = "#";
     }
 
     let delay = 250 * i;
@@ -105,13 +106,13 @@ export default function checkGuess(wirdleState, rightGuessString) {
       // flip box
       animate(box, "flipInX");
       // shade the box
-      box.style.backgroundColor = letterColor;
+      box.style.backgroundColor = currentBoxBGColor;
       // call shadeKeyBoard() to also shade bg of virtual keyboard
-      shadeKeyBoard(letter, letterColor);
+      shadeKeyBoard(letter, currentBoxBGColor);
     }, delay);
   } // end for ... loop
 
-  if (guessString === rightGuessString) {
+  if (guessString === wirdle) {
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
     wirdleState.guessesRemaining = 0;
     wirdleState.newGame = true;
@@ -133,7 +134,7 @@ export default function checkGuess(wirdleState, rightGuessString) {
         localStorage.setItem("gamesPlayed", 3);
       }
       toastr.info(
-        `The correct word was: ${rightGuessString}`,
+        `The correct word was: ${wirdle}`,
         "Game Over. Better luck next time.",
         { timeOut: 5000 }
       );
