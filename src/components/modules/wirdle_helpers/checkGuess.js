@@ -17,6 +17,7 @@ export default function checkGuess(wirdleState, wirdle) {
       6 - wirdleState.guessesRemaining
     ];
   let guessString = "";
+  const wirdleString = wirdle;
   wirdle = Array.from(wirdle);
   const endGameMessage = [
     "Whoa! Just made it.",
@@ -67,6 +68,15 @@ export default function checkGuess(wirdleState, wirdle) {
     let currentBoxBGColor = "";
     let box = row.children[i];
     let letter = wirdleState.currentGuess[i];
+
+    // Find the indexes in wirdle where current letter appear
+    // in string
+    const sourceStr = wirdleString;
+    const searchStr = letter;
+    const indexOfLetters = [
+      ...sourceStr.matchAll(new RegExp(searchStr, "gi")),
+    ].map((a) => a.index);
+    console.log(`Index of matches ${indexOfLetters}`);
 
     // Check if the letter is in the wirdle array
     let guessedLetterPositionInWirdle = wirdle.indexOf(letter);
