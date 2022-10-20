@@ -74,10 +74,17 @@ export default function checkGuess(wirdleState, wirdle) {
     const sourceStr = wirdleString;
     const searchStr = letter;
     // Get the position(s) where current letter appear in the wirdle
-    const indexOfLetters = [
+    const indexOfLettersInWirdle = [
       ...sourceStr.matchAll(new RegExp(searchStr, "gi")),
     ].map((a) => a.index);
-    console.log(`Index of matches ${indexOfLetters}`);
+    console.log(`Index(s) of matches in wirdle ${indexOfLettersInWirdle}`);
+    // Check if current letter appears more then once in guessed word
+    const indexOfLettersInGuessString = [
+      ...guessString.matchAll(new RegExp(searchStr, "gi")),
+    ].map((a) => a.index);
+    console.log(
+      `Index(s) of matches in guessString ${indexOfLettersInGuessString}`
+    );
 
     // Check if the letter is in the wirdle array
     //let guessedLetterPositionInWirdle = wirdle.indexOf(letter);
@@ -87,7 +94,7 @@ export default function checkGuess(wirdleState, wirdle) {
     // const currentLetterMatchesInWirdle = guessString.match(regex).length;
     // console.log(currentLetterMatchesInWirdle);
     // Now determine what color to assign to background of letter box
-    if (indexOfLetters.length === 0) {
+    if (indexOfLettersInWirdle.length === 0) {
       currentBoxBGColor = "grey";
     } /* else if (currentLetterMatchesInWirdle > 1) {
       console.log("Im in letter that appears more then once");
@@ -109,7 +116,7 @@ export default function checkGuess(wirdleState, wirdle) {
         currentBoxBGColor = "yellow";
       }
       // Mark the wirdle position as done
-      //wirdle[indexOfLetters] = "#";
+      //wirdle[indexOfLettersInWirdle] = "#";
       wirdleString = wirdleString.replace(searchStr, "#");
     }
 
