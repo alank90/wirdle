@@ -2,6 +2,7 @@ import shadeKeyBoard from "./shadeKeyboard";
 import { WORDS } from "../words";
 import toastr from "toastr";
 import animate from "./animate";
+import assignBGColor from "./assignBGColor";
 
 /**
  * checkGuess - Compares two strings and reacts accordingly
@@ -86,26 +87,15 @@ export default function checkGuess(wirdleState, wirdle) {
       `Index(s) of matches in guessString ${indexOfLettersInGuessString}`
     );
 
-    // Check if the letter is in the wirdle array
-    //let guessedLetterPositionInWirdle = wirdle.indexOf(letter);
-    // Check how many times letter appears in the wirdle string
-    // const regex = new RegExp(letter, "g");
-    // How many times does current guessed letter appear in wirdle
-    // const currentLetterMatchesInWirdle = guessString.match(regex).length;
-    // console.log(currentLetterMatchesInWirdle);
-    // Now determine what color to assign to background of letter box
+    // Check if the letter is in the wirdle array and if so,
+    // Determine what color to assign to background of letter box
     if (indexOfLettersInWirdle.length === 0) {
       currentBoxBGColor = "grey";
-    } /* else if (currentLetterMatchesInWirdle > 1) {
-      console.log("Im in letter that appears more then once");
-      // Loop thru the wirdle Array
-      while (currentLetterMatchesInWirdle) {
-        console.log("test");
-
-        currentLetterMatchesInWirdle - 1;
-      } 
-    } */ else {
-      // now, letter is definitely in word so,
+    } else if (
+      indexOfLettersInWirdle.length === 1 &&
+      indexOfLettersInGuessString.length === 1
+    ) {
+      // now, letter is definitely in wirdle and appears only once so,
       // if letter index and right guess index are the same
       // letter is in the right position
       if (letter === wirdle[i]) {
@@ -116,8 +106,21 @@ export default function checkGuess(wirdleState, wirdle) {
         currentBoxBGColor = "yellow";
       }
       // Mark the wirdle position as done
-      //wirdle[indexOfLettersInWirdle] = "#";
       wirdleString = wirdleString.replace(searchStr, "#");
+    } else {
+      console.log("Im in letter that appears more then once in guess string");
+      currentBoxBGColor = assignBGColor(
+        indexOfLettersInGuessString,
+        indexOfLettersInWirdle,
+        guessString,
+        wirdleString,
+        i
+      );
+
+      // Mark the wirdle position as done
+      if (currentBoxBGColor === "green" || currentBoxBGColor === "yellow") {
+        wirdleString = wirdleString.replace(searchStr, "#");
+      }
     }
 
     let delay = 250 * i;
