@@ -14,10 +14,11 @@ export default function assignBGColor(
   wirdleString,
   currentWordPosition
 ) {
-  console.log(indexesOfGuess, indexesOfWirdle);
   if (guessString[currentWordPosition] === wirdleString[currentWordPosition]) {
     console.log(wirdleString, currentWordPosition, guessString);
     return "green";
+  } else if (guessString[currentWordPosition] !== "#") {
+    return "yellow";
   } else {
     return "grey";
   }

@@ -95,7 +95,7 @@ export default function checkGuess(wirdleState, wirdle) {
       indexOfLettersInWirdle.length === 1 &&
       indexOfLettersInGuessString.length === 1
     ) {
-      // now, letter is definitely in wirdle and appears only once so,
+      // Now, letter is definitely in wirdle and appears only once so,
       // if letter index and right guess index are the same
       // letter is in the right position
       if (letter === wirdle[i]) {
@@ -108,7 +108,6 @@ export default function checkGuess(wirdleState, wirdle) {
       // Mark the wirdle position as done
       wirdleString = wirdleString.replace(searchStr, "#");
     } else {
-      console.log("Im in letter that appears more then once in guess string");
       currentBoxBGColor = assignBGColor(
         indexOfLettersInGuessString,
         indexOfLettersInWirdle,
@@ -117,9 +116,21 @@ export default function checkGuess(wirdleState, wirdle) {
         i
       );
 
-      // Mark the wirdle position as done
+      // Mark the wirdle position(s) as done
       if (currentBoxBGColor === "green" || currentBoxBGColor === "yellow") {
-        wirdleString = wirdleString.replace(searchStr, "#");
+        if (indexOfLettersInWirdle.length === 1) {
+          // Letter only appears once in wirdle, so we can blank
+          // out any other appearences of letter further in the wirdle.
+          for (let n = 0; n < indexOfLettersInGuessString.length; n++) {
+            wirdleString = wirdleString.replace(searchStr, "#");
+            guessString = guessString.replace(searchStr, "#");
+          }
+        } else {
+          // Letter appears subsequent to this position, so we will
+          // only blank out this entry.
+          wirdleString = wirdleString.replace(searchStr, "#");
+          guessString = guessString.replace(searchStr, "#");
+        }
       }
     }
 
@@ -134,7 +145,9 @@ export default function checkGuess(wirdleState, wirdle) {
     }, delay);
   } // end for ... loop
 
-  if (guessString === wirdle) {
+  // have to reinitialize wirdleString
+  wirdleString = wirdle.join("");
+  if (guessString === wirdleString) {
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
     wirdleState.guessesRemaining = 0;
     wirdleState.newGame = true;
