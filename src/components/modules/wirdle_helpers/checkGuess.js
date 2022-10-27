@@ -128,8 +128,10 @@ export default function checkGuess(wirdleState, wirdle) {
         } else {
           // Letter appears subsequent to this position, so we will
           // only blank out this entry.
-          wirdleString = wirdleString.replace(searchStr, "#");
-          guessString = guessString.replace(searchStr, "#");
+          const regex = new RegExp("\\b([\\w])(\\w*?)\\1", "gm");
+          const subst = `$1$2#`;
+          wirdleString = wirdleString.replace(regex, subst);
+          guessString = guessString.replace(regex, subst);
         }
       }
     }
