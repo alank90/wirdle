@@ -22,6 +22,14 @@
         {
           "url": "http://localhost:3000/src/components",
           "path": "${workspaceFolder}/src/components"
+        },
+        {
+          "url": "http://localhost:3000/src/components",
+          "path": "${workspaceFolder}/src/components"
+        },
+        {
+          "url": "http://localhost:3000/src/components",
+          "path": "${workspaceFolder}/src/components"
         }
       ]
     }
