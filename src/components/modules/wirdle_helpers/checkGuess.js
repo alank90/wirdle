@@ -17,9 +17,10 @@ export default function checkGuess(wirdleState, wirdle) {
     document.getElementsByClassName("letter-row")[
       6 - wirdleState.guessesRemaining
     ];
-  let guessString = "";
-  let wirdleString = wirdle;
+  let guessStr = "";
+  let wirdleStr = wirdle;
   wirdle = Array.from(wirdle);
+  //let guessWordArr = wirdleState.currentGuess;
   const endGameMessage = [
     "Whoa! Just made it.",
     "Cutting it a little close.",
@@ -40,16 +41,16 @@ export default function checkGuess(wirdleState, wirdle) {
 
   // Convert to a string from an array
   for (const val of wirdleState.currentGuess) {
-    guessString += val;
+    guessStr += val;
   }
 
-  // Several basic validity checks on the guessString
-  if (guessString.length != 5) {
+  // Several basic validity checks on the guessStr
+  if (guessStr.length != 5) {
     toastr.error("Not enough letters!.");
   }
 
-  if (!WORDS.includes(guessString)) {
-    // Clear DOM of guessString
+  if (!WORDS.includes(guessStr)) {
+    // Clear DOM of guessStr
     let box = null;
     for (let i = 0; i < row.children.length; i++) {
       box = row.children[i];
@@ -72,28 +73,26 @@ export default function checkGuess(wirdleState, wirdle) {
 
     // Find the indexes in wirdle where current letter appear
     // in string
-    const sourceStr = wirdleString;
+    const sourceStr = wirdleStr;
     const searchStr = letter;
     // Get the position(s) where current letter appear in the wirdle
-    const indexOfLettersInWirdle = [
+    const indexOfLettersInWirdleStr = [
       ...sourceStr.matchAll(new RegExp(searchStr, "gi")),
     ].map((a) => a.index);
-    console.log(`Index(s) of matches in wirdle ${indexOfLettersInWirdle}`);
+    console.log(`Index(s) of matches in wirdle ${indexOfLettersInWirdleStr}`);
     // Check if current letter appears more then once in guessed word
-    const indexOfLettersInGuessString = [
-      ...guessString.matchAll(new RegExp(searchStr, "gi")),
+    const indexOfLettersInGuessStr = [
+      ...guessStr.matchAll(new RegExp(searchStr, "gi")),
     ].map((a) => a.index);
-    console.log(
-      `Index(s) of matches in guessString ${indexOfLettersInGuessString}`
-    );
+    console.log(`Index(s) of matches in guessStr ${indexOfLettersInGuessStr}`);
 
     // Check if the letter is in the wirdle array and if so,
     // Determine what color to assign to background of letter box
-    if (indexOfLettersInWirdle.length === 0) {
+    if (indexOfLettersInWirdleStr.length === 0) {
       currentBoxBGColor = "grey";
     } else if (
-      indexOfLettersInWirdle.length === 1 &&
-      indexOfLettersInGuessString.length === 1
+      indexOfLettersInWirdleStr.length === 1 &&
+      indexOfLettersInGuessStr.length === 1
     ) {
       // Now, letter is definitely in wirdle and appears only once so,
       // if letter index and right guess index are the same
@@ -106,32 +105,40 @@ export default function checkGuess(wirdleState, wirdle) {
         currentBoxBGColor = "yellow";
       }
       // Mark the wirdle position as done
-      wirdleString = wirdleString.replace(searchStr, "#");
+      wirdleStr = wirdleStr.replace(searchStr, "#");
     } else {
       currentBoxBGColor = assignBGColor(
-        indexOfLettersInGuessString,
-        indexOfLettersInWirdle,
-        guessString,
-        wirdleString,
+        indexOfLettersInGuessStr,
+        indexOfLettersInWirdleStr,
+        guessStr,
+        wirdleStr,
         i
       );
 
       // Mark the wirdle position(s) as done
       if (currentBoxBGColor === "green" || currentBoxBGColor === "yellow") {
-        if (indexOfLettersInWirdle.length === 1) {
+        if (indexOfLettersInWirdleStr.length === 1) {
           // Letter only appears once in wirdle, so we can blank
           // out any other appearences of letter further in the wirdle.
-          for (let n = 0; n < indexOfLettersInGuessString.length; n++) {
-            wirdleString = wirdleString.replace(searchStr, "#");
-            guessString = guessString.replace(searchStr, "#");
+          for (let n = 0; n < indexOfLettersInGuessStr.length; n++) {
+            wirdleStr = wirdleStr.replace(searchStr, "#");
+            guessStr = guessStr.replace(searchStr, "#");
           }
         } else {
           // Letter appears subsequent to this position, so we will
           // only blank out this entry.
-          const regex = new RegExp("\\b([\\w])(\\w*?)\\1", "gm");
-          const subst = `$1$2#`;
-          wirdleString = wirdleString.replace(regex, subst);
-          guessString = guessString.replace(regex, subst);
+          //const regex = new RegExp("\\b([\\w])(\\w*?)\\1", "gm");
+          //const subst = `$1$2#`;
+          wirdleStr = Array.from(wirdleStr)
+            .map((char, index) =>
+              char === wirdle[i] && index === i ? "#" : char
+            )
+            .join("");
+          guessStr = Array.from(guessStr)
+            .map((char, index) =>
+              char === guessStr[i] && index === i ? "#" : char
+            )
+            .join("");
         }
       }
     }
@@ -147,9 +154,9 @@ export default function checkGuess(wirdleState, wirdle) {
     }, delay);
   } // end for ... loop
 
-  // have to reinitialize wirdleString
-  wirdleString = wirdle.join("");
-  if (guessString === wirdleString) {
+  // have to reinitialize wirdleStr
+  wirdleStr = wirdle.join("");
+  if (guessStr === wirdleStr) {
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
     wirdleState.guessesRemaining = 0;
     wirdleState.newGame = true;
