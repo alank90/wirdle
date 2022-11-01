@@ -95,7 +95,7 @@ export default function checkGuess(wirdleState, wirdle) {
       indexOfLettersInGuessStr.length === 1
     ) {
       // Now, letter is definitely in wirdle and appears only once so,
-      // if letter index and right guess index are the same
+      // if letter index and right guess index are the same, then
       // letter is in the right position
       if (letter === wirdle[i]) {
         // shade box green
@@ -104,8 +104,9 @@ export default function checkGuess(wirdleState, wirdle) {
         // shade box yellow
         currentBoxBGColor = "yellow";
       }
-      // Mark the wirdle position as done
+      // Mark the wirdle & guessStr position's as done
       wirdleStr = wirdleStr.replace(searchStr, "#");
+      guessStr = guessStr.replace(searchStr, "#");
     } else {
       currentBoxBGColor = assignBGColor(
         indexOfLettersInGuessStr,
