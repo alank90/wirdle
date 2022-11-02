@@ -63,7 +63,7 @@ const initVars = (data) => {
 
   // Executes if we haven't exceeded our # of turns for the day
   //rightGuessString.value = WORDS[Math.floor(Math.random() * WORDS.length)];
-  rightGuessString.value = "mummy";
+  rightGuessString.value = "gaped";
   wirdleState.guessesRemaining = Number_Of_Guesses;
   wirdleState.currentGuess = [];
   wirdleState.nextLetter = 0;

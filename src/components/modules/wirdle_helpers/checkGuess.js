@@ -19,8 +19,10 @@ export default function checkGuess(wirdleState, wirdle) {
     ];
   let guessStr = "";
   let wirdleStr = wirdle;
-  wirdle = Array.from(wirdle);
-  //let guessWordArr = wirdleState.currentGuess;
+  let box = null;
+  let letter = "";
+  let i = 0;
+  let currentBoxBGColor = "";
   const endGameMessage = [
     "Whoa! Just made it.",
     "Cutting it a little close.",
@@ -29,6 +31,28 @@ export default function checkGuess(wirdleState, wirdle) {
     "Excellent. You must do this alot.",
     "Wow! Your're a genius.",
   ];
+
+  // ============================================ //
+  // ============== Methods ===================== //
+  // ============================================ //
+
+  const boxAnimation = function () {
+    let delay = 250 * i;
+    setTimeout(() => {
+      // flip box
+      animate(box, "flipInX");
+      // shade the box
+      box.style.backgroundColor = currentBoxBGColor;
+      // call shadeKeyBoard() to also shade bg of virtual keyboard
+      shadeKeyBoard(letter, currentBoxBGColor);
+    }, delay);
+  };
+
+  // =========================================== //
+  // ==========End of Method(s)================= //
+  // =========================================== //
+
+  wirdle = Array.from(wirdle);
 
   // toastr config options
   toastr.options.closeButton = true;
@@ -67,9 +91,9 @@ export default function checkGuess(wirdleState, wirdle) {
   } // End if
 
   for (let i = 0; i < 5; i++) {
-    let currentBoxBGColor = "";
-    let box = row.children[i];
-    let letter = wirdleState.currentGuess[i];
+    currentBoxBGColor = "";
+    box = row.children[i];
+    letter = wirdleState.currentGuess[i];
 
     // Find the indexes in wirdle where current letter appear
     // in string
@@ -90,6 +114,9 @@ export default function checkGuess(wirdleState, wirdle) {
     // Determine what color to assign to background of letter box
     if (indexOfLettersInWirdleStr.length === 0) {
       currentBoxBGColor = "grey";
+      boxAnimation();
+
+      continue;
     } else if (
       indexOfLettersInWirdleStr.length === 1 &&
       indexOfLettersInGuessStr.length === 1
@@ -100,14 +127,25 @@ export default function checkGuess(wirdleState, wirdle) {
       if (letter === wirdle[i]) {
         // shade box green
         currentBoxBGColor = "green";
+        // Mark the wirdle & guessStr position's as done
+        wirdleStr = wirdleStr.replace(searchStr, "#");
+        guessStr = guessStr.replace(searchStr, "#");
       } else {
         // shade box yellow
         currentBoxBGColor = "yellow";
+        // Mark the wirdle & guessStr position's as done
+        wirdleStr = wirdleStr.replace(searchStr, "#");
+        guessStr = guessStr.replace(searchStr, "#");
       }
-      // Mark the wirdle & guessStr position's as done
-      wirdleStr = wirdleStr.replace(searchStr, "#");
-      guessStr = guessStr.replace(searchStr, "#");
-    } else {
+
+      boxAnimation();
+      continue;
+    }
+
+    if (
+      indexOfLettersInWirdleStr.length > 1 ||
+      indexOfLettersInGuessStr.length > 1
+    ) {
       currentBoxBGColor = assignBGColor(
         indexOfLettersInGuessStr,
         indexOfLettersInWirdleStr,
@@ -116,43 +154,36 @@ export default function checkGuess(wirdleState, wirdle) {
         i
       );
 
-      // Mark the wirdle position(s) as done
-      if (currentBoxBGColor === "green" || currentBoxBGColor === "yellow") {
-        if (indexOfLettersInWirdleStr.length === 1) {
-          // Letter only appears once in wirdle, so we can blank
-          // out any other appearences of letter further in the wirdle.
-          for (let n = 0; n < indexOfLettersInGuessStr.length; n++) {
-            wirdleStr = wirdleStr.replace(searchStr, "#");
-            guessStr = guessStr.replace(searchStr, "#");
-          }
-        } else {
-          // Letter appears subsequent to this position, so we will
-          // only blank out this entry.
-          //const regex = new RegExp("\\b([\\w])(\\w*?)\\1", "gm");
-          //const subst = `$1$2#`;
-          wirdleStr = Array.from(wirdleStr)
-            .map((char, index) =>
-              char === wirdle[i] && index === i ? "#" : char
-            )
-            .join("");
-          guessStr = Array.from(guessStr)
-            .map((char, index) =>
-              char === guessStr[i] && index === i ? "#" : char
-            )
-            .join("");
-        }
-      }
-    }
+      // The current letter in wirdle appears more then once in either
+      //wirlde/guessStr. So we must check ahead in this situation.
 
-    let delay = 250 * i;
-    setTimeout(() => {
-      // flip box
-      animate(box, "flipInX");
-      // shade the box
-      box.style.backgroundColor = currentBoxBGColor;
-      // call shadeKeyBoard() to also shade bg of virtual keyboard
-      shadeKeyBoard(letter, currentBoxBGColor);
-    }, delay);
+      if (currentBoxBGColor === "green") {
+        // Letter only appears once in wirdle, so we can blank
+        // out any other appearences of letter further in the wirdle.
+
+        wirdleStr = wirdleStr.replace(searchStr, "#");
+        guessStr = guessStr.replace(searchStr, "#");
+      } else if (
+        currentBoxBGColor === "yellow" ||
+        currentBoxBGColor === "grey"
+      ) {
+        // Letter appears subsequent to this position, so we will
+        // only blank out this entry.
+
+        wirdleStr = Array.from(wirdleStr)
+          .map((char, index) =>
+            char === wirdle[i] && index === i ? "#" : char
+          )
+          .join("");
+        guessStr = Array.from(guessStr)
+          .map((char, index) =>
+            char === guessStr[i] && index === i ? "#" : char
+          )
+          .join("");
+      }
+
+      boxAnimation();
+    }
   } // end for ... loop
 
   // have to reinitialize wirdleStr
@@ -187,5 +218,6 @@ export default function checkGuess(wirdleState, wirdle) {
       toastr.error("Sorry! Error. Please start again.");
     }
   }
+
   return { wirdleState };
 }
