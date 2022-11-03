@@ -3,8 +3,6 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
-
 // Vars
 const emit = defineEmits(["updateState"]);
 const data = false;

@@ -36,7 +36,7 @@ export default function checkGuess(wirdleState, wirdle) {
   // ============== Methods ===================== //
   // ============================================ //
 
-  const boxAnimation = function () {
+  const boxAnimation = function (box, currentBoxBGColor, letter) {
     let delay = 250 * i;
     setTimeout(() => {
       // flip box
@@ -103,18 +103,16 @@ export default function checkGuess(wirdleState, wirdle) {
     const indexOfLettersInWirdleStr = [
       ...sourceStr.matchAll(new RegExp(searchStr, "gi")),
     ].map((a) => a.index);
-    console.log(`Index(s) of matches in wirdle ${indexOfLettersInWirdleStr}`);
     // Check if current letter appears more then once in guessed word
     const indexOfLettersInGuessStr = [
       ...guessStr.matchAll(new RegExp(searchStr, "gi")),
     ].map((a) => a.index);
-    console.log(`Index(s) of matches in guessStr ${indexOfLettersInGuessStr}`);
 
     // Check if the letter is in the wirdle array and if so,
     // Determine what color to assign to background of letter box
     if (indexOfLettersInWirdleStr.length === 0) {
       currentBoxBGColor = "grey";
-      boxAnimation();
+      boxAnimation(box, currentBoxBGColor, letter);
 
       continue;
     } else if (
@@ -138,7 +136,7 @@ export default function checkGuess(wirdleState, wirdle) {
         guessStr = guessStr.replace(searchStr, "#");
       }
 
-      boxAnimation();
+      boxAnimation(box, currentBoxBGColor, letter);
       continue;
     }
 
@@ -182,11 +180,12 @@ export default function checkGuess(wirdleState, wirdle) {
           .join("");
       }
 
-      boxAnimation();
+      boxAnimation(box, currentBoxBGColor, letter);
     }
   } // end for ... loop
 
-  // have to reinitialize wirdleStr
+  // have to reinitialize wirdleStr & guessStr
+  guessStr = wirdleState.currentGuess.join("");
   wirdleStr = wirdle.join("");
   if (guessStr === wirdleStr) {
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
@@ -210,7 +209,7 @@ export default function checkGuess(wirdleState, wirdle) {
         localStorage.setItem("gamesPlayed", 3);
       }
       toastr.info(
-        `The correct word was: ${wirdle}`,
+        `The correct word was: ${wirdle.join("")}`,
         "Game Over. Better luck next time.",
         { timeOut: 5000 }
       );
