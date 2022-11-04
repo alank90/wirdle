@@ -52,7 +52,7 @@ export default function checkGuess(wirdleState, wirdle) {
   // ==========End of Method(s)================= //
   // =========================================== //
 
-  wirdle = Array.from(wirdle);
+  const wirdleArr = Array.from(wirdle);
 
   // toastr config options
   toastr.options.closeButton = true;
@@ -95,7 +95,7 @@ export default function checkGuess(wirdleState, wirdle) {
     box = row.children[i];
     letter = wirdleState.currentGuess[i];
 
-    // Find the indexes in wirdle where current letter appear
+    // Find the indexes in wirdleArr where current letter appear
     // in string
     const sourceStr = wirdleStr;
     const searchStr = letter;
@@ -122,7 +122,7 @@ export default function checkGuess(wirdleState, wirdle) {
       // Now, letter is definitely in wirdle and appears only once so,
       // if letter index and right guess index are the same, then
       // letter is in the right position
-      if (letter === wirdle[i]) {
+      if (letter === wirdleArr[i]) {
         // shade box green
         currentBoxBGColor = "green";
         // Mark the wirdle & guessStr position's as done
@@ -140,7 +140,9 @@ export default function checkGuess(wirdleState, wirdle) {
       continue;
     }
 
-    if (
+    // The current letter in wirdle appears more then once in either
+    //wirdle/guessStr. So we must check ahead in this situation.
+    else if (
       indexOfLettersInWirdleStr.length > 1 ||
       indexOfLettersInGuessStr.length > 1
     ) {
@@ -152,9 +154,8 @@ export default function checkGuess(wirdleState, wirdle) {
         i
       );
 
-      // The current letter in wirdle appears more then once in either
-      //wirlde/guessStr. So we must check ahead in this situation.
-
+      // Now let's check what color we've assigned the box background
+      // and take the appropriate action(s)
       if (currentBoxBGColor === "green") {
         // Letter only appears once in wirdle, so we can blank
         // out any other appearences of letter further in the wirdle.
@@ -170,7 +171,7 @@ export default function checkGuess(wirdleState, wirdle) {
 
         wirdleStr = Array.from(wirdleStr)
           .map((char, index) =>
-            char === wirdle[i] && index === i ? "#" : char
+            char === wirdleArr[i] && index === i ? "#" : char
           )
           .join("");
         guessStr = Array.from(guessStr)
@@ -181,12 +182,14 @@ export default function checkGuess(wirdleState, wirdle) {
       }
 
       boxAnimation(box, currentBoxBGColor, letter);
+    } else {
+      console.log("Error: No conditions met in checkGuess.js for loop.");
     }
-  } // end for ... loop
+  } // ====== end for... loop ============================== //
 
-  // have to reinitialize wirdleStr & guessStr
+  // Have to reinitialize wirdleStr & guessStr
   guessStr = wirdleState.currentGuess.join("");
-  wirdleStr = wirdle.join("");
+  wirdleStr = wirdleArr.join("");
   if (guessStr === wirdleStr) {
     toastr.success(endGameMessage[wirdleState.guessesRemaining - 1]);
     wirdleState.guessesRemaining = 0;
@@ -209,7 +212,7 @@ export default function checkGuess(wirdleState, wirdle) {
         localStorage.setItem("gamesPlayed", 3);
       }
       toastr.info(
-        `The correct word was: ${wirdle.join("")}`,
+        `The correct word was: ${wirdleArr.join("")}`,
         "Game Over. Better luck next time.",
         { timeOut: 5000 }
       );
