@@ -163,21 +163,17 @@ export default function checkGuess(wirdleState, wirdle) {
         wirdleStr = wirdleStr.replace(searchStr, "#");
         guessStr = guessStr.replace(searchStr, "#");
       } else if (
-        currentBoxBGColor === "yellow" ||
-        currentBoxBGColor === "grey"
+        (currentBoxBGColor === "yellow" || currentBoxBGColor === "grey") &&
+        indexOfLettersInWirdleStr.length === 1
       ) {
-        // Letter appears subsequent to this position, so we will
-        // only blank out this entry.
+        // Letter appears once subsequent to this position, so we will
+        // blank out this entry.
 
         wirdleStr = Array.from(wirdleStr)
-          .map((char, index) =>
-            char === wirdleArr[i] && index === i ? "#" : char
-          )
+          .map((char) => (char === letter ? "#" : char))
           .join("");
         guessStr = Array.from(guessStr)
-          .map((char, index) =>
-            char === guessStr[i] && index === i ? "#" : char
-          )
+          .map((char) => (char === letter ? "#" : char))
           .join("");
       }
 
