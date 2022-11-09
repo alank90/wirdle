@@ -16,8 +16,10 @@ export default function assignBGColor(
 ) {
   if (guessStr[currentWordPosition] === wirdleStr[currentWordPosition]) {
     return "green";
-  } else if (indexesOfGuess.length >= 1 && indexesOfWirdle.length === 1) {
-    return "yellow";
+  } else if (indexesOfGuess.length > indexesOfWirdle.length) {
+    guessStr[currentWordPosition] === wirdleStr[currentWordPosition]
+      ? "green"
+      : "grey";
   } else if (indexesOfWirdle.indexOf(indexesOfGuess[0])) {
     return "yellow";
   } else {

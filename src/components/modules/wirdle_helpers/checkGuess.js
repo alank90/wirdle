@@ -13,6 +13,7 @@ import assignBGColor from "./assignBGColor";
  * @return { wirdleState }
  */
 export default function checkGuess(wirdleState, wirdle) {
+  // ====== Vars ======================= //
   let row =
     document.getElementsByClassName("letter-row")[
       6 - wirdleState.guessesRemaining
@@ -23,6 +24,7 @@ export default function checkGuess(wirdleState, wirdle) {
   let letter = "";
   let i = 0;
   let currentBoxBGColor = "";
+  let counter = 0;
   const endGameMessage = [
     "Whoa! Just made it.",
     "Cutting it a little close.",
@@ -113,6 +115,8 @@ export default function checkGuess(wirdleState, wirdle) {
     if (indexOfLettersInWirdleStr.length === 0) {
       currentBoxBGColor = "grey";
       boxAnimation(box, currentBoxBGColor, letter);
+      // Mark this letter as done in guessStr.
+      guessStr = guessStr.replace(searchStr, "#");
 
       continue;
     } else if (
@@ -141,7 +145,7 @@ export default function checkGuess(wirdleState, wirdle) {
     }
 
     // The current letter in wirdle appears more then once in either
-    //wirdle/guessStr. So we must check ahead in this situation.
+    // wirdle/guessStr. So we must check ahead in this situation.
     else if (
       indexOfLettersInWirdleStr.length > 1 ||
       indexOfLettersInGuessStr.length > 1
@@ -163,17 +167,33 @@ export default function checkGuess(wirdleState, wirdle) {
         wirdleStr = wirdleStr.replace(searchStr, "#");
         guessStr = guessStr.replace(searchStr, "#");
       } else if (
-        (currentBoxBGColor === "yellow" || currentBoxBGColor === "grey") &&
-        indexOfLettersInWirdleStr.length === 1
+        currentBoxBGColor === "yellow" ||
+        currentBoxBGColor === "grey"
       ) {
-        // Letter appears once subsequent to this position, so we will
-        // blank out this entry.
-
+        // Letter appears at least once subsequent to this position, so we will
+        // blank out this entry only.
+        counter = 0;
         wirdleStr = Array.from(wirdleStr)
-          .map((char) => (char === letter ? "#" : char))
+          .map((char) => {
+            if (char === letter && counter === 0) {
+              counter++;
+              return "#";
+            } else {
+              return char;
+            }
+          })
           .join("");
+
+        counter = 0;
         guessStr = Array.from(guessStr)
-          .map((char) => (char === letter ? "#" : char))
+          .map((char) => {
+            if (char === letter && counter === 0) {
+              counter++;
+              return "#";
+            } else {
+              return char;
+            }
+          })
           .join("");
       }
 
