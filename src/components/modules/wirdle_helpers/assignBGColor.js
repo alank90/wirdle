@@ -29,7 +29,7 @@ export default function assignBGColor(
       : "grey";
   } else if (
     // If more wirdle letters then guess letter matches also return
-    // green if direct match, else return grey.
+    // green if direct match, else return grey if .
     indexesOfWirdle.length > indexesOfGuess.length &&
     !indexesOfWirdle.indexOf(indexesOfGuess[0])
   ) {
@@ -37,11 +37,11 @@ export default function assignBGColor(
       ? "green"
       : "grey";
   } else if (
-    indexesOfGuess.length === indexesOfWirdle.length &&
+    indexesOfGuess.length === 1 &&
     indexesOfWirdle.indexOf(indexesOfGuess[0])
   ) {
-    // If same number of match(s) in guessStr and wirdleStr and
-    // there was no direct match at currentPosition, return yellow
+    // If only one current letter in guessStr and and it is in
+    // wirdleStr but not a direct match, return yellow
     return "yellow";
   } else {
     // If we fell thru to here, default return grey

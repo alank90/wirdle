@@ -191,13 +191,13 @@ export default function checkGuess(wirdleState, wirdle) {
           .join("");
 
         counter = 0;
+        // **** trouble here with guessStr = aging *******
         guessStr = Array.from(guessStr)
           .map((char) => {
             if (
               char === letter &&
               counter === 0 &&
-              indexOfLettersInWirdleStr.length <=
-                indexOfLettersInGuessStr.length
+              indexOfLettersInGuessStr.length < indexOfLettersInWirdleStr.length
             ) {
               counter++;
               return "#";
