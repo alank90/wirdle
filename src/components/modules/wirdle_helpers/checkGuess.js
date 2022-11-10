@@ -164,8 +164,9 @@ export default function checkGuess(wirdleState, wirdle) {
         // Letter only appears once in wirdle, so we can blank
         // out any other appearences of letter further in the wirdle.
 
-        wirdleStr = wirdleStr.replace(searchStr, "#");
-        guessStr = guessStr.replace(searchStr, "#");
+        wirdleStr =
+          wirdleStr.substring(0, i) + "#" + wirdleStr.substring(i + 1);
+        guessStr = guessStr.substring(0, i) + "#" + guessStr.substring(i + 1);
       } else if (
         currentBoxBGColor === "yellow" ||
         currentBoxBGColor === "grey"
@@ -175,7 +176,12 @@ export default function checkGuess(wirdleState, wirdle) {
         counter = 0;
         wirdleStr = Array.from(wirdleStr)
           .map((char) => {
-            if (char === letter && counter === 0) {
+            if (
+              char === letter &&
+              counter === 0 &&
+              indexOfLettersInGuessStr.length <=
+                indexOfLettersInWirdleStr.length
+            ) {
               counter++;
               return "#";
             } else {
@@ -187,7 +193,12 @@ export default function checkGuess(wirdleState, wirdle) {
         counter = 0;
         guessStr = Array.from(guessStr)
           .map((char) => {
-            if (char === letter && counter === 0) {
+            if (
+              char === letter &&
+              counter === 0 &&
+              indexOfLettersInWirdleStr.length <=
+                indexOfLettersInGuessStr.length
+            ) {
               counter++;
               return "#";
             } else {
