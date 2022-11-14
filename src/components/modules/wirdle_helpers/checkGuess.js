@@ -119,10 +119,7 @@ export default function checkGuess(wirdleState, wirdle) {
       guessStr = guessStr.replace(searchStr, "#");
 
       continue;
-    } else if (
-      indexOfLettersInWirdleStr.length === 1 &&
-      indexOfLettersInGuessStr.length === 1
-    ) {
+    } else if (indexOfLettersInWirdleStr.length === 1) {
       // Now, letter is definitely in wirdle and appears only once so,
       // if letter index and right guess index are the same, then
       // letter is in the right position
@@ -179,8 +176,7 @@ export default function checkGuess(wirdleState, wirdle) {
             if (
               char === letter &&
               counter === 0 &&
-              indexOfLettersInGuessStr.length <=
-                indexOfLettersInWirdleStr.length
+              currentBoxBGColor === "yellow"
             ) {
               counter++;
               return "#";
@@ -197,7 +193,7 @@ export default function checkGuess(wirdleState, wirdle) {
             if (
               char === letter &&
               counter === 0 &&
-              indexOfLettersInGuessStr.length < indexOfLettersInWirdleStr.length
+              currentBoxBGColor === "yellow"
             ) {
               counter++;
               return "#";

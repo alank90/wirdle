@@ -17,6 +17,10 @@ export default function assignBGColor(
   if (guessStr[currentWordPosition] === wirdleStr[currentWordPosition]) {
     // If exact match return green
     return "green";
+  } else if (indexesOfGuess.length === indexesOfWirdle.length) {
+    // Equal number of appearences guess && wirdle so we can just
+    // return a yellow
+    return "yellow";
   } else if (
     // If more guess letters then wirdle letters , either direct match or
     // or box should be grey and can defer to letters further in the
@@ -29,7 +33,7 @@ export default function assignBGColor(
       : "grey";
   } else if (
     // If more wirdle letters then guess letter matches also return
-    // green if direct match, else return grey if .
+    // green if direct match, else return grey.
     indexesOfWirdle.length > indexesOfGuess.length &&
     !indexesOfWirdle.indexOf(indexesOfGuess[0])
   ) {
